@@ -3,6 +3,7 @@
 	--grey-l1: #F3F3F4;
 	--grey-d1: #E3E3E3;
 	--black: #595959;
+	--grey-d2: #D7D7D7;
 }
 
 
@@ -10,8 +11,33 @@ html, body{
 	font-family: 'roboto';
 	background-color: var(--grey-l1);
 }
-
-
+.card-1, .card-2, .card-3 {
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 2px 2px 5px 2px var(--grey-d2);
+}
+.chart-lbl {
+    margin: 5% 5% 1% 5%;
+    font-size: 12px;
+    color: var(--black);
+}
+.chart-lbl-container{
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+}
+.divider{
+	background-color: var(--grey-d1);
+    height: 2px;
+    margin: 10% auto;
+    width: 99%;
+}
+.divider-sm{
+	background-color: var(--grey-d1);
+    height: 2px;
+    margin: 5% auto;
+    width: 99%;
+}
 header, .control{
 	display: flex;
 	align-items: center;
@@ -29,7 +55,9 @@ header, .control{
 .selection{
 	padding: 10px;
 	border-radius: 5px;
-	border: solid var(--grey-d1) 2px;
+/*	border: solid var(--grey-d1) 2px;*/
+	border: none;
+	box-shadow: 2px 2px 5px 2px var(--grey-d2);
 }
 .sub-txt{
 	text-align: center;

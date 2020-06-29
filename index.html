@@ -4,6 +4,7 @@
 	<title>COVID-19 Tracker</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="css/Chart.css">
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<link rel="stylesheet" type="text/css" href="css/breakpoints.css">
 </head>
@@ -24,11 +25,27 @@
 			</div>
 		</div>
 	</header>
+	<div class="divider">
+	</div>
 <main>
-	<div class="container">
-		
+	<div class="dashboard-container">
+		<div class="card-1">
+			<div class="chart-lbl-container">
+				<h4 class="chart-lbl">
+	                Doughnut Chart
+	            </h4>
+        	</div>
+            <div class="divider-sm">
+            </div>
+            <div class="doughnut-chart-container">
+                <canvas class="doughnut-chart" id="doughnut">
+                </canvas>
+           </div>
+		</div>
 	</div>
 </main>
+<script src="js/Chart.min.js">
+</script>
 <script src="js/logic.js">
 </script>
 </body>
