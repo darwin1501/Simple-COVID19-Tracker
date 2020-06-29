@@ -1,0 +1,17 @@
+
+
+
+
+header{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.header-txt{
+	text-align: center;
+	margin-bottom: 0;
+}
+.sub-txt{
+	margin-top: 0;
+}
