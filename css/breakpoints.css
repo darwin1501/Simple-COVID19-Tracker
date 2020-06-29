@@ -1,0 +1,10 @@
+
+
+@media screen and (min-width: 320px){
+	.control{
+		margin-top: 20%;
+	}
+	.sub-txt{
+		font-size: 12px;
+	}
+}

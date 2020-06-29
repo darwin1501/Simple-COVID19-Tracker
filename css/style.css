@@ -1,17 +1,41 @@
 
+:root{
+	--grey-l1: #F3F3F4;
+	--grey-d1: #E3E3E3;
+	--black: #595959;
+}
 
 
+html, body{
+	font-family: 'roboto';
+	background-color: var(--grey-l1);
+}
 
-header{
+
+header, .control{
 	display: flex;
 	align-items: center;
 	justify-content: center;
+}
+
+.header-txt, .sub-txt{
+	color: var(--black);
 }
 
 .header-txt{
 	text-align: center;
 	margin-bottom: 0;
 }
+.selection{
+	padding: 10px;
+	border-radius: 5px;
+	border: solid var(--grey-d1) 2px;
+}
 .sub-txt{
+	text-align: center;
 	margin-top: 0;
+}
+.text-link{
+	color: var(--black);
+	cursor: pointer;
 }
