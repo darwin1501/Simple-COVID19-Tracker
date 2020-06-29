@@ -9,15 +9,33 @@ async function getData(){
 
 	  let json = await response.json();
 	  //run generateOption
-	  generateOption(json)
+	  return json
 
+	  // generateOption(json)
+	  
 	} else {
 	  console.log("HTTP-Error: " + response.status)
 	}
 }
-//run getData
-getData();
 
+//run getData
+
+
+const pendingData = Promise.resolve(getData()).then(function(data) {
+	generateOption(data)
+	generateData(data)
+	}, function(data) {
+		console.log('error');
+	})
+// Promise.resolve(getData()).then(function(data) {
+// 	return data
+// }, function(data) {
+// 	console.log('error');
+// })
+
+
+
+// console.log(getData())
 //creates country dropdown list in selection
 const generateOption = ((data) => {
 
@@ -40,12 +58,24 @@ const generateOption = ((data) => {
 	};
 })
 
-const getCountryName = (() => {
+const generateData = ((data) => {
 
 		const selectedCountry = document.getElementById('selection').value
 
-		console.log(selectedCountry)
+		// console.log(selectedCountry)
+
+		const findCountryName = data.find(xyz => xyz.country === selectedCountry)
+
+		console.log(findCountryName.cases)
+
+		
 })
+
+// const rawData = ((data) => {
+// 		return data
+// })
+
+
 
 
 // //ES6
