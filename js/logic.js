@@ -2,41 +2,47 @@
 const covid19Api = 'https://disease.sh/v2/countries?yesterday=false&allowNull=false';
 
 async function getData(){
+    let response = await fetch(covid19Api);
 
-	let response = await fetch(covid19Api);
+  if(response.ok){
+    let json = await response.json();
+   
+    // Pass data in another function
 
-	if (response.ok) { // if HTTP-status is 200-299
+    //set it to sessions
+    sessionStorage.data = JSON.stringify(json);
 
-	  let json = await response.json();
-	  //run generateOption
-	  return json
+	generateOption(json)
+	// sometime later
+   
+  }else{
+    console.log("HTTP-Error: " + response.status);
+  }
 
-	  // generateOption(json)
-	  
-	} else {
-	  console.log("HTTP-Error: " + response.status)
-	}
+  return response;
 }
 
-//run getData
+getData();
+
+async function viewData(){
+	const json = await sessionStorage.data
+
+	const dataParsed = JSON.parse( sessionStorage.data )
+
+	generateData(dataParsed)
+}
 
 
-const pendingData = Promise.resolve(getData()).then(function(data) {
-	generateOption(data)
-	generateData(data)
-	}, function(data) {
-		console.log('error');
-	})
-// Promise.resolve(getData()).then(function(data) {
-// 	return data
-// }, function(data) {
-// 	console.log('error');
-// })
+// //session store
+// // Store
+// sessionStorage.setItem("lastname", "Smith");
+// // Retrieve
+// document.getElementById("result").innerHTML = sessionStorage.getItem("lastname");
 
 
 
-// console.log(getData())
-//creates country dropdown list in selection
+
+
 const generateOption = ((data) => {
 
 	const select = document.getElementById('selection');
@@ -63,7 +69,6 @@ const generateData = ((data) => {
 		const selectedCountry = document.getElementById('selection').value
 
 		// console.log(selectedCountry)
-
 		const findCountryName = data.find(xyz => xyz.country === selectedCountry)
 
 		console.log(findCountryName.cases)
