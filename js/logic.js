@@ -9,11 +9,11 @@ async function getData(){
    
     // Pass data in another function
 
-    //set it to sessions
+    //store in session
     sessionStorage.data = JSON.stringify(json);
 
 	generateOption(json)
-	// sometime later
+
    
   }else{
     console.log("HTTP-Error: " + response.status);
@@ -25,8 +25,9 @@ async function getData(){
 getData();
 
 async function viewData(){
-	const json = await sessionStorage.data
 
+	const json = await sessionStorage.data
+	//get and parse json stored in session
 	const dataParsed = JSON.parse( sessionStorage.data )
 
 	generateData(dataParsed)
