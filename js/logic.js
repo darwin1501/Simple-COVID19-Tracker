@@ -1,5 +1,5 @@
 
-const covid19Api = 'https://disease.sh/v2/countries?yesterday=false&allowNull=false';
+const covid19Api = 'https://disease.sh/v3/covid-19/countries?yesterday=false&allowNull=false';
 
 async function getData(){
     let response = await fetch(covid19Api);
@@ -7,8 +7,8 @@ async function getData(){
   if(response.ok){
     let json = await response.json();
    
-    // Pass data in another function
-
+   //clear session storage
+    sessionStorage.clear()
     //store in session
     sessionStorage.data = JSON.stringify(json);
 
@@ -24,13 +24,13 @@ async function getData(){
 
 getData();
 
-async function viewData(){
+async function distributeData(){
 
 	const json = await sessionStorage.data
 	//get and parse json stored in session
 	const dataParsed = JSON.parse( sessionStorage.data )
 
-	generateData(dataParsed)
+	getDetailedCaseToday(dataParsed)
 }
 
 
@@ -65,14 +65,19 @@ const generateOption = ((data) => {
 	};
 })
 
-const generateData = ((data) => {
+const getDetailedCaseToday = ((data) => {
 
 		const selectedCountry = document.getElementById('selection').value
 
 		// console.log(selectedCountry)
-		const findCountryName = data.find(xyz => xyz.country === selectedCountry)
+		const country = data.find(xyz => xyz.country === selectedCountry)
 
-		console.log(findCountryName.cases)
+		//total case today
+		console.log(`Today Cases at ${country.country} : ${country.todayCases}`)
+		//total recovery today
+		console.log(`Todays Recovery at ${country.country} : ${country.todayRecovered}`)
+		//total deaths today
+		console.log(`Todays Death at ${country.country}  : ${country.todayDeaths}`)
 
 		
 })
