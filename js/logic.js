@@ -103,10 +103,10 @@ const getDetailedCase = ((newData, oldData) => {
 		if(todaysData.todayCases < yesterdaysData.todayCases){
 			//decrease
 			//convert 
-			 label = 'decrease'
+			 label = 'decrease';
 		}else{
 			//increase
-			 label = 'increase'
+			 label = 'increase';
 
 		}
 
