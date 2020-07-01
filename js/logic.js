@@ -84,16 +84,41 @@ const getDetailedCase = ((newData, oldData) => {
 		// //total deaths today
 		// console.log(`Todays Death at ${todaysData.country}  : ${todaysData.todayDeaths}`)
 		//total case
-		console.log(`Todays total case at ${todaysData.country}: ${todaysData.cases}`)
+		console.log(`Todays total case at ${todaysData.country}: ${todaysData.todayCases}`)
 		//yesterday
-		console.log(`Yesterdays total case at ${yesterdaysData.country}: ${yesterdaysData.cases}`)
+		console.log(`Yesterdays total case at ${yesterdaysData.country}: ${yesterdaysData.todayCases}`)
 
-		//get percentage
-		const addedCase = todaysData.cases - yesterdaysData.cases;
 
-		const divide = addedCase / yesterday
-		//calculate
-		console.log(`New Cases Added today at ${todaysData.country}: ${addedCase}`);
+
+		//get percentage for Total Case today
+
+		let addedCase = todaysData.todayCases - yesterdaysData.todayCases;
+
+		const divide = addedCase / todaysData.todayCases;
+
+		let totalPercentage = divide * 100;
+
+		let label = ''
+
+		if(todaysData.todayCases < yesterdaysData.todayCases){
+			//decrease
+			//convert 
+			 label = 'decrease'
+		}else{
+			//increase
+			 label = 'increase'
+
+		}
+
+		if(addedCase <= 0){
+			addedCase = 0
+			totalPercentage = 0.00
+			label = ' '
+		}
+
+console.log(`New Cases Added today at ${todaysData.country}: ${addedCase} ${totalPercentage.toFixed(2)}% ${label}`);
+
+
 		
 })
 
