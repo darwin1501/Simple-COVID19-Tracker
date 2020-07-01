@@ -38,7 +38,6 @@ async function getData(){
 
 getData();
 
-
 const distributeData = (() => {
 
 	const newDataParsed = JSON.parse( sessionStorage.newData )
@@ -89,6 +88,7 @@ const getDetailedCase = ((newData, oldData) => {
 		console.log(`Yesterdays total case at ${yesterdaysData.country}: ${yesterdaysData.todayCases}`)
 
 
+		//add seperate functions to each opration
 
 		//get percentage for Total Case today
 
@@ -117,8 +117,6 @@ const getDetailedCase = ((newData, oldData) => {
 		}
 
 console.log(`New Cases Added today at ${todaysData.country}: ${addedCase} ${totalPercentage.toFixed(2)}% ${label}`);
-
-
 		
 })
 
