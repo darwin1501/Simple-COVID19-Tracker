@@ -1,37 +1,52 @@
 
-const covid19Api = 'https://disease.sh/v3/covid-19/countries?yesterday=false&allowNull=false';
+const covid19Data1 = 'https://disease.sh/v3/covid-19/countries?yesterday=false&allowNull=false';
+
+const covid19Data2 = 'https://disease.sh/v3/covid-19/countries?yesterday=true&allowNull=false';
+
 
 async function getData(){
-    let response = await fetch(covid19Api);
 
-  if(response.ok){
-    let json = await response.json();
+    let todaysData = await fetch(covid19Data1);
+
+    let yesterdaysData = await fetch(covid19Data2);
+
+    let responseArray = [todaysData, yesterdaysData]
+
+  if(todaysData.ok && yesterdaysData.ok ){
+
+  	let newData = await todaysData.json() 
+
+    let oldData = await yesterdaysData.json();
    
    //clear session storage
     sessionStorage.clear()
-    //store in session
-    sessionStorage.data = JSON.stringify(json);
 
-	generateOption(json)
+    //store in session
+    sessionStorage.newData = JSON.stringify(newData);
+    sessionStorage.oldData = JSON.stringify(oldData);
+
+	generateOption(newData);
 
    
   }else{
     console.log("HTTP-Error: " + response.status);
   }
 
-  return response;
+  return responseArray;
 }
 
 getData();
 
-async function distributeData(){
 
-	const json = await sessionStorage.data
-	//get and parse json stored in session
-	const dataParsed = JSON.parse( sessionStorage.data )
+const distributeData = (() => {
 
-	getDetailedCaseToday(dataParsed)
-}
+	const newDataParsed = JSON.parse( sessionStorage.newData )
+	const oldDataParsed = JSON.parse( sessionStorage.oldData )
+
+	getDetailedCase(newDataParsed, oldDataParsed)
+})
+
+
 
 
 // //session store
@@ -65,20 +80,24 @@ const generateOption = ((data) => {
 	};
 })
 
-const getDetailedCaseToday = ((data) => {
+//detailed case today compared to yeterday
+const getDetailedCase = ((newData, oldData) => {
 
 		const selectedCountry = document.getElementById('selection').value
 
-		// console.log(selectedCountry)
-		const country = data.find(xyz => xyz.country === selectedCountry)
+		const todaysData = newData.find(xyz => xyz.country === selectedCountry)
 
+		const yesterdaysData = oldData.find(xyz => xyz.country === selectedCountry)
 		//total case today
-		console.log(`Today Cases at ${country.country} : ${country.todayCases}`)
-		//total recovery today
-		console.log(`Todays Recovery at ${country.country} : ${country.todayRecovered}`)
-		//total deaths today
-		console.log(`Todays Death at ${country.country}  : ${country.todayDeaths}`)
-
+		// console.log(`Today Cases at ${todaysData.country} : ${todaysData.todayCases}`)
+		// //total recovery today
+		// console.log(`Todays Recovery at ${todaysData.country} : ${todaysData.todayRecovered}`)
+		// //total deaths today
+		// console.log(`Todays Death at ${todaysData.country}  : ${todaysData.todayDeaths}`)
+		//total case
+		console.log(`Todays total case at ${todaysData.country}: ${todaysData.cases}`)
+		//yesterday
+		console.log(`Yesterdays total case at ${yesterdaysData.country}: ${yesterdaysData.cases}`)
 		
 })
 
