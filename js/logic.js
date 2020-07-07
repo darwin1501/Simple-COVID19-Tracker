@@ -79,6 +79,8 @@ const getDetailedCase = ((newData, oldData) => {
 		
 		todaysDetailedCase(todaysData, yesterdaysData);
 
+		getTodaysRecoveries(todaysData, yesterdaysData);
+
 		getPopulationsAndInfected(todaysData);
 		
 });
@@ -91,11 +93,11 @@ const todaysDetailedCase = ((today,  yesterday) =>{
 
 		const yesterdayCasesFormated = new Intl.NumberFormat().format(yesterday.todayCases);
 
-		console.log(`Todays total case at ${today.country}: ${todayCasesFormated}`)
-		//yesterday
-		console.log(`Yesterdays total case at ${yesterday.country}: ${yesterdayCasesFormated}`)
+		console.log(`Todays total case at ${today.country}: ${todayCasesFormated}`);
 
-		//get percentage for total case today compared to yesterday
+		console.log(`Yesterdays total case at ${yesterday.country}: ${yesterdayCasesFormated}`);
+
+		//get active case and its percentage
 
 		let addedCase = today.todayCases - yesterday.todayCases;
 
@@ -105,6 +107,8 @@ const todaysDetailedCase = ((today,  yesterday) =>{
 
 		let label = '';
 
+		//condition to display correct value
+
 		if(today.todayCases > yesterday.todayCases){
 
 			 label = 'increase';
@@ -113,9 +117,20 @@ const todaysDetailedCase = ((today,  yesterday) =>{
 
 			label = 'decrease';
 
+		}else if (today.todayCases == 0 && yesterday.todayCases == 0){
+
+			label = ' ';
 		}
 
-		if(addedCase === 0 || today.todayCases === 0){
+		if(addedCase === 0 && today.todayCases === 0){
+
+			addedCase = 0;
+
+			totalPercentage = 0;
+
+			label = ' ';
+
+		}else if(addedCase === 0 || today.todayCases === 0){
 
 			addedCase = 0;
 
@@ -133,9 +148,82 @@ const todaysDetailedCase = ((today,  yesterday) =>{
 
 		}
 
-console.log(`New Cases Added today at ${today.country}: ${addedCase} | ${totalPercentage.toFixed(2)}% ${label} from yeterday`);
+		console.log(`New Cases Added today at ${today.country}: ${addedCase} | ${totalPercentage.toFixed(2)}% ${label}`);
 
-})
+});
+
+
+const getTodaysRecoveries = ((today, yesterday) =>{
+
+		const todaysRecoveriesFormated = new Intl.NumberFormat().format(today.todayRecovered);
+
+		const yesterdayRecoveriesFormated = new Intl.NumberFormat().format(yesterday.todayRecovered);
+
+		console.log(`Todays recovery at ${today.country}: ${todaysRecoveriesFormated}`);
+
+		console.log(`Yesterdays recovery at ${yesterday.country}: ${yesterdayRecoveriesFormated}`);
+
+		// const todaysDeathsFormated = new Intl.NumberFormat().format(today.todayDeaths);
+
+		// const yesterdayDeathsFormated = new Intl.NumberFormat().format(yesterday.todayDeaths);
+
+		//get todays recoveries and its percentage
+
+		let newRecoveries = today.todayRecovered - yesterday.todayRecovered;
+
+		const divided = newRecoveries / today.todayCases;
+
+		let totalPercentage = divided * 100;
+
+		let label = '';
+
+		//condition to display correct value
+
+		if(today.todayRecovered > yesterday.todayRecovered){
+
+			 label = 'increase';
+
+		}else if(today.todayRecovered < yesterday.todayRecovered){
+
+			label = 'decrease';
+
+		}else if (today.todayRecovered == 0 && yesterday.todayRecovered == 0){
+
+			label = ' ';
+		}
+
+		if(newRecoveries === 0 && today.todayRecovered === 0){
+
+			newRecoveries = 0;
+
+			totalPercentage = 0;
+
+			label = ' ';
+
+		}else if(newRecoveries === 0 || today.todayRecovered === 0){
+
+			newRecoveries = 0;
+
+			totalPercentage = 100;
+
+			label = 'decrease';
+
+		}else if(newRecoveries < 0){
+
+			newRecoveries = Math.abs(newRecoveries);
+
+			newRecoveries = new Intl.NumberFormat().format(newRecoveries);
+
+			totalPercentage = Math.abs(totalPercentage);
+
+			label = 'decrease';
+
+		}
+
+		console.log(`New Recovery Added today at ${today.country}: ${newRecoveries} | ${totalPercentage.toFixed(2)}% ${label}`);
+});
+
+
 
 const getPopulationsAndInfected = ((data) =>{
 
