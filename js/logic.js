@@ -105,28 +105,32 @@ const todaysDetailedCase = ((today,  yesterday) =>{
 
 		let label = '';
 
-		if(today.todayCases < yesterday.todayCases){
-
-			 label = 'decrease';
-
-		}else{
+		if(today.todayCases > yesterday.todayCases){
 
 			 label = 'increase';
+
+		}else if(today.todayCases < yesterday.todayCases){
+
+			label = 'decrease';
+
 		}
 
-		if(addedCase < 0){
+		if(addedCase === 0 || today.todayCases === 0){
+
+			addedCase = 0;
+
+			totalPercentage = 100;
+
+			label = 'decrease';
+
+		}else if(addedCase < 0){
 
 			addedCase = Math.abs(addedCase);
 
 			totalPercentage = Math.abs(totalPercentage);
 
-		}else if(addedCase === 0){
+			label = 'decrease';
 
-			addedCase = 0;
-
-			totalPercentage = 0.00;
-
-			label = ' ';
 		}
 
 console.log(`New Cases Added today at ${today.country}: ${addedCase} | ${totalPercentage.toFixed(2)}% ${label} from yeterday`);
@@ -160,8 +164,16 @@ const getPopulationsAndInfected = ((data) =>{
 
 		console.log(`Total population: ${populationFormated}`);
 		console.log(`Not infected ${safePopulationFormated} | infected: ${infectedFormated}`);
-		console.log(`${safePopulationPercent.toFixed(2)}% of the population are safe.`)
+		console.log(`${safePopulationPercent.toFixed(2)}% of the population are safe.`);
+
+		if(safePopulationPercent.toFixed(2) == 99.99){
+
+		console.log(`${infectedPercent.toFixed(4)}% of the population are infected.`);
+
+		}else{
+
 		console.log(`${infectedPercent.toFixed(2)}% of the population are infected.`);
+		}
 
 })
 
