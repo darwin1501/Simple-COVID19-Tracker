@@ -110,10 +110,19 @@ const getDetailedCase = ((newData, oldData) => {
 
 		}
 
-		if(addedCase <= 0){
-			addedCase = 0
-			totalPercentage = 0.00
-			label = ' '
+		if(addedCase < 0){
+
+			addedCase = Math.abs(addedCase);
+
+			totalPercentage = Math.abs(totalPercentage);
+
+		}else if(addedCase === 0){
+
+			addedCase = 0;
+
+			totalPercentage = 0.00;
+
+			label = ' ';
 		}
 
 console.log(`New Cases Added today at ${todaysData.country}: ${addedCase} ${totalPercentage.toFixed(2)}% ${label}`);
