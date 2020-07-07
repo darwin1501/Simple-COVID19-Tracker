@@ -1,6 +1,6 @@
-
+//today's data
 const covid19Data1 = 'https://disease.sh/v3/covid-19/countries?yesterday=false&allowNull=false';
-
+//yesterday's data
 const covid19Data2 = 'https://disease.sh/v3/covid-19/countries?yesterday=true&allowNull=false';
 
 async function getData(){
@@ -71,43 +71,47 @@ const generateOption = ((data) => {
 //detailed case today compared to yeterday
 const getDetailedCase = ((newData, oldData) => {
 
-		const selectedCountry = document.getElementById('selection').value
+		const selectedCountry = document.getElementById('selection').value;
 
-		const todaysData = newData.find(data => data.country === selectedCountry)
+		const todaysData = newData.find(data => data.country === selectedCountry);
 
-		const yesterdaysData = oldData.find(data => data.country === selectedCountry)
-		//total case today
-		// console.log(`Today Cases at ${todaysData.country} : ${todaysData.todayCases}`)
-		// //total recovery today
-		// console.log(`Todays Recovery at ${todaysData.country} : ${todaysData.todayRecovered}`)
-		// //total deaths today
-		// console.log(`Todays Death at ${todaysData.country}  : ${todaysData.todayDeaths}`)
-		//total case
-		console.log(`Todays total case at ${todaysData.country}: ${todaysData.todayCases}`)
+		const yesterdaysData = oldData.find(data => data.country === selectedCountry);
+		
+		todaysDetailedCase(todaysData, yesterdaysData);
+
+		getPopulationsAndInfected(todaysData);
+		
+});
+
+
+const todaysDetailedCase = ((today,  yesterday) =>{
+
+		//format numbers
+		const todayCasesFormated = new Intl.NumberFormat().format(today.todayCases);
+
+		const yesterdayCasesFormated = new Intl.NumberFormat().format(yesterday.todayCases);
+
+		console.log(`Todays total case at ${today.country}: ${todayCasesFormated}`)
 		//yesterday
-		console.log(`Yesterdays total case at ${yesterdaysData.country}: ${yesterdaysData.todayCases}`)
+		console.log(`Yesterdays total case at ${yesterday.country}: ${yesterdayCasesFormated}`)
 
+		//get percentage for total case today compared to yesterday
 
-		//add seperate functions to each opration
+		let addedCase = today.todayCases - yesterday.todayCases;
 
-		//get percentage for Total Case today
+		const divided = addedCase / today.todayCases;
 
-		let addedCase = todaysData.todayCases - yesterdaysData.todayCases;
+		let totalPercentage = divided * 100;
 
-		const divide = addedCase / todaysData.todayCases;
+		let label = '';
 
-		let totalPercentage = divide * 100;
+		if(today.todayCases < yesterday.todayCases){
 
-		let label = ''
-
-		if(todaysData.todayCases < yesterdaysData.todayCases){
-			//decrease
-			//convert 
 			 label = 'decrease';
-		}else{
-			//increase
-			 label = 'increase';
 
+		}else{
+
+			 label = 'increase';
 		}
 
 		if(addedCase < 0){
@@ -125,8 +129,43 @@ const getDetailedCase = ((newData, oldData) => {
 			label = ' ';
 		}
 
-console.log(`New Cases Added today at ${todaysData.country}: ${addedCase} ${totalPercentage.toFixed(2)}% ${label}`);
-		
+console.log(`New Cases Added today at ${today.country}: ${addedCase} | ${totalPercentage.toFixed(2)}% ${label} from yeterday`);
+
 })
+
+const getPopulationsAndInfected = ((data) =>{
+
+		const population = data.population;
+
+		const infected = data.cases;
+
+		const safePopulation = population - infected;
+
+		//format numbers
+		const populationFormated = new Intl.NumberFormat().format(population);
+
+		const infectedFormated = new Intl.NumberFormat().format(infected);
+
+		const safePopulationFormated = new Intl.NumberFormat().format(safePopulation);
+
+		//get percentage of total infected in population
+		const dividedInfection = infected / population ;
+		//convert into percentage
+		const infectedPercent = dividedInfection * 100;
+
+		//get percentage of total not infected in population
+		const dividedSafePopulation = safePopulation / population;
+		//convert into percentage
+		const safePopulationPercent = dividedSafePopulation * 100;
+
+		console.log(`Total population: ${populationFormated}`);
+		console.log(`Not infected ${safePopulationFormated} | infected: ${infectedFormated}`);
+		console.log(`${safePopulationPercent.toFixed(2)}% of the population are safe.`)
+		console.log(`${infectedPercent.toFixed(2)}% of the population are infected.`);
+
+})
+
+
+
 
 
