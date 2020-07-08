@@ -84,6 +84,10 @@ const getDetailedCase = ((newData, oldData) => {
 		getTodaysDeaths(todaysData, yesterdaysData);
 
 		getPopulationsAndInfected(todaysData);
+
+		getOverallDetailedCase(todaysData);
+
+		getTestAndCritical(todaysData);
 		
 });
 
@@ -244,6 +248,33 @@ const getPopulationsAndInfected = ((data) =>{
 		console.log(`${infectedPercent.toFixed(2)}% of the population are infected.`);
 		}
 
+});
+
+//get total active case, recovery, and deaths
+const getOverallDetailedCase = ((data) =>{
+
+		const getActiveCase = data.active;
+
+		const getRecovered = data.recovered;
+
+		const getDeaths = data.deaths;
+
+		const country = data.country;
+
+		console.log(`${country} || Active: ${getActiveCase} | Recovered: ${getRecovered} | Deaths ${getDeaths}`)
+
+});
+
+//get test conducted and critical
+const getTestAndCritical = ((data) =>{
+
+		const getTest = data.tests;
+
+		const getCritical = data.critical;
+
+		const country = data.country;
+
+		console.log(`${country} || Test Conducted: ${getTest} | Critical: ${getCritical}`);
 })
 
 
