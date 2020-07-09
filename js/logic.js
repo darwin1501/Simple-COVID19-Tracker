@@ -76,19 +76,34 @@ const getDetailedCase = ((newData, oldData) => {
 		const todaysData = newData.find(data => data.country === selectedCountry);
 
 		const yesterdaysData = oldData.find(data => data.country === selectedCountry);
-		
-		todaysDetailedCase(todaysData, yesterdaysData);
-
+		//dougnut chart 1
+		todaysActiveCase(todaysData, yesterdaysData);
+		//dougnut chart 1
 		getTodaysRecoveries(todaysData, yesterdaysData);
-
+		//dougnut chart 1
 		getTodaysDeaths(todaysData, yesterdaysData);
-
+		//pie chart 2
 		getPopulationsAndInfected(todaysData);
-
+		//dougnut chart 3
 		getOverallDetailedCase(todaysData);
-
+		//card 1 and 2
 		getTestAndCritical(todaysData);
 		
+});
+
+//prepare data in charts
+const caseToday = (()=>{
+		//get the data in arrays
+
+		//pass the data in generateChart()
+})
+
+//charts config.
+//req. type, data{labels, datasets{ data, bg-color}}, 
+const generateChart = ((type, labels, data, bgColor)=>{
+		//chart config
+
+		//update chart
 });
 
 
@@ -147,8 +162,8 @@ const getPercentages = ((today, yesterday, dataText, country) =>{
 
 		return console.log(`${dataText} at ${country}: ${newCount} | ${totalPercentage.toFixed(2)}% ${label}`);
 })
-
-const todaysDetailedCase = ((today,  yesterday) =>{
+//Active Case
+const todaysActiveCase = ((today,  yesterday) =>{
 
 		//format numbers
 		const todayCasesFormated = new Intl.NumberFormat().format(today.todayCases);
