@@ -8,7 +8,7 @@
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<link rel="stylesheet" type="text/css" href="css/breakpoints.css">
 </head>
-<body>
+<body onload="distributeData()">
 	<header>
 		<div class="header-content">
 			<div class="header-txt-container">
@@ -20,6 +20,7 @@
 			<div class="control">
 				<div class="selection-container">
 					<select class="selection" id="selection" onchange="distributeData()">
+						<option value="global" selected="selected">Global</option>
 					</select>
 				</div>
 			</div>

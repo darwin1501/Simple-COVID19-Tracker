@@ -1,7 +1,12 @@
-//today's data
+//today's data case per country
 const covid19Data1 = 'https://disease.sh/v3/covid-19/countries?yesterday=false&allowNull=false';
-//yesterday's data
+//yesterday's data case per country
 const covid19Data2 = 'https://disease.sh/v3/covid-19/countries?yesterday=true&allowNull=false';
+//global data today
+const covid19GlobalData1 = 'https://disease.sh/v3/covid-19/all?yesterday=false&allowNull=false';
+//global data yesterday
+const covid19GlobalData2 = 'https://disease.sh/v3/covid-19/all?yesterday=true&allowNull=false';
+
 
 async function getData(){
 
@@ -9,13 +14,21 @@ async function getData(){
 
     let yesterdaysData = await fetch(covid19Data2);
 
+    let globalTodayData = await fetch(covid19GlobalData1);
+
+    let globalYesterdayData = await fetch(covid19GlobalData2);
+
     let responseArray = [todaysData, yesterdaysData]
 
-  if(todaysData.ok && yesterdaysData.ok ){
+  if((todaysData.ok && yesterdaysData.ok) && (globalTodayData.ok && globalYesterdayData.ok)){
 
   	let newData = await todaysData.json() 
 
     let oldData = await yesterdaysData.json();
+
+    let globalNewData = await globalTodayData.json();
+
+    let globalOldData =  await globalYesterdayData.json();
    
    //clear session storage
     sessionStorage.clear()
@@ -24,11 +37,16 @@ async function getData(){
 
     sessionStorage.oldData = JSON.stringify(oldData);
 
+    sessionStorage.globalNewData = JSON.stringify(globalNewData);
+
+    sessionStorage.globalOldData = JSON.stringify(globalOldData);
+
 	generateOption(newData);
 
   }else{
 
-    console.log("HTTP-Error: " + response.status);
+    // console.log("HTTP-Error: " + response.status);
+    console.log('load error')
 
   }
 
@@ -40,11 +58,15 @@ getData();
 
 const distributeData = (() => {
 
-	const newDataParsed = JSON.parse( sessionStorage.newData )
+	const newDataParsed = JSON.parse( sessionStorage.newData );
 
-	const oldDataParsed = JSON.parse( sessionStorage.oldData )
+	const oldDataParsed = JSON.parse( sessionStorage.oldData );
 
-	getDetailedCase(newDataParsed, oldDataParsed)
+	const globalNewDataParsed = JSON.parse( sessionStorage.globalNewData );
+
+	const globalOldDataParsed = JSON.parse( sessionStorage.globalOldData );
+
+	getDetailedCase(newDataParsed, oldDataParsed, globalNewDataParsed, globalOldDataParsed)
 })
 
 const generateOption = ((data) => {
@@ -69,25 +91,42 @@ const generateOption = ((data) => {
 })
 
 //detailed case today compared to yeterday
-const getDetailedCase = ((newData, oldData) => {
+const getDetailedCase = ((newData, oldData, globalNewData, globalOldData) => {
 
-		const selectedCountry = document.getElementById('selection').value;
 
-		const todaysData = newData.find(data => data.country === selectedCountry);
+		let selectedCountry = document.getElementById('selection').value;
 
-		const yesterdaysData = oldData.find(data => data.country === selectedCountry);
+		let todaysData;
+
+		let yesterdaysData;
+
+		if(selectedCountry === 'global'){
+
+			todaysData = globalNewData;
+
+			yesterdaysData = globalOldData;
+
+		}else{
+
+			todaysData = newData.find(data => data.country === selectedCountry);
+
+			yesterdaysData = oldData.find(data => data.country === selectedCountry);
+
+			console.log(todaysData);
+
+		}
 		//dougnut chart 1
-		todaysActiveCase(todaysData, yesterdaysData);
+		todaysActiveCase(todaysData, yesterdaysData, selectedCountry);
 		//dougnut chart 1
-		getTodaysRecoveries(todaysData, yesterdaysData);
+		getTodaysRecoveries(todaysData, yesterdaysData, selectedCountry);
 		//dougnut chart 1
-		getTodaysDeaths(todaysData, yesterdaysData);
+		getTodaysDeaths(todaysData, yesterdaysData, selectedCountry);
 		//pie chart 2
 		getPopulationsAndInfected(todaysData);
 		//dougnut chart 3
-		getOverallDetailedCase(todaysData);
+		getOverallDetailedCase(todaysData, selectedCountry);
 		//card 1 and 2
-		getTestAndCritical(todaysData);
+		getTestAndCritical(todaysData, selectedCountry);
 		
 });
 
@@ -163,7 +202,7 @@ const getPercentages = ((today, yesterday, dataText, country) =>{
 		return console.log(`${dataText} at ${country}: ${newCount} | ${totalPercentage.toFixed(2)}% ${label}`);
 })
 //Active Case
-const todaysActiveCase = ((today,  yesterday) =>{
+const todaysActiveCase = ((today, yesterday, country) =>{
 
 		//format numbers
 		const todayCasesFormated = new Intl.NumberFormat().format(today.todayCases);
@@ -174,21 +213,21 @@ const todaysActiveCase = ((today,  yesterday) =>{
 
 		const yesterdayCases = yesterday.todayCases;
 
-		console.log(`Todays total case at ${today.country}: ${todayCasesFormated}`);
+		console.log(`Todays total case at ${country}: ${todayCasesFormated}`);
 
-		console.log(`Yesterdays total case at ${yesterday.country}: ${yesterdayCasesFormated}`);
+		console.log(`Yesterdays total case at ${country}: ${yesterdayCasesFormated}`);
 		//comparison
 		const dataText = 'Active Case';
 
 		// todays count, yesterday count, datatest, country;
-		getPercentages(todayCases, yesterdayCases, dataText, today.country);
+		getPercentages(todayCases, yesterdayCases, dataText, country);
 
 		//return array
 
 });
 
 
-const getTodaysRecoveries = ((today, yesterday) =>{
+const getTodaysRecoveries = ((today, yesterday, country) =>{
 
 		const todaysRecoveriesFormated = new Intl.NumberFormat().format(today.todayRecovered);
 
@@ -198,19 +237,19 @@ const getTodaysRecoveries = ((today, yesterday) =>{
 
 		const yesterdaysRecoveries = yesterday.todayRecovered;
 
-		console.log(`Todays recovery at ${today.country}: ${todaysRecoveriesFormated}`);
+		console.log(`Todays recovery at ${country}: ${todaysRecoveriesFormated}`);
 
-		console.log(`Yesterdays recovery at ${yesterday.country}: ${yesterdayRecoveriesFormated}`);
+		console.log(`Yesterdays recovery at ${country}: ${yesterdayRecoveriesFormated}`);
 		//comparison
 		const dataText = 'Recovery';
 		// todays count, yesterday count, datatest, country;
-		getPercentages(todaysRecoveries, yesterdaysRecoveries, dataText, today.country);
+		getPercentages(todaysRecoveries, yesterdaysRecoveries, dataText, country);
 
 		//return array
 
 });
 
-const getTodaysDeaths = ((today, yesterday) =>{
+const getTodaysDeaths = ((today, yesterday, country) =>{
 
 		const todayDeathsFormated = new Intl.NumberFormat().format(today.todayDeaths);
 
@@ -220,13 +259,13 @@ const getTodaysDeaths = ((today, yesterday) =>{
 
 		const yesterdayDeaths = yesterday.todayDeaths;
 
-		console.log(`Todays deaths at ${today.country}: ${todayDeathsFormated}`);
+		console.log(`Todays deaths at ${country}: ${todayDeathsFormated}`);
 
-		console.log(`Yesterdays deaths at ${yesterday.country}: ${yesterdayDeathsFormated}`);
+		console.log(`Yesterdays deaths at ${country}: ${yesterdayDeathsFormated}`);
 		//comparison
 		const dataText = 'Deaths';
 
-		getPercentages(todayDeaths, yesterdayDeaths, dataText, today.country);
+		getPercentages(todayDeaths, yesterdayDeaths, dataText, country);
 
 		//return array
 })
@@ -274,15 +313,13 @@ const getPopulationsAndInfected = ((data) =>{
 });
 
 //get total active case, recovery, and deaths
-const getOverallDetailedCase = ((data) =>{
+const getOverallDetailedCase = ((data, country) =>{
 
 		const getActiveCase = data.active;
 
 		const getRecovered = data.recovered;
 
 		const getDeaths = data.deaths;
-
-		const country = data.country;
 
 		console.log(`${country} || Active: ${getActiveCase} | Recovered: ${getRecovered} | Deaths ${getDeaths}`);
 
@@ -291,13 +328,11 @@ const getOverallDetailedCase = ((data) =>{
 });
 
 //get test conducted and critical
-const getTestAndCritical = ((data) =>{
+const getTestAndCritical = ((data, country) =>{
 
 		const getTest = data.tests;
 
 		const getCritical = data.critical;
-
-		const country = data.country;
 
 		console.log(`${country} || Test Conducted: ${getTest} | Critical: ${getCritical}`);
 })
