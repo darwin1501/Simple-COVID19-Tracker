@@ -222,7 +222,9 @@ const todaysActiveCase = ((today, yesterday, country) =>{
 		// todays count, yesterday count, datatest, country;
 		getPercentages(todayCases, yesterdayCases, dataText, country);
 
+		// data to be return => type, labels, data, bgColor
 		//return array
+		
 
 });
 
