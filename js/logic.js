@@ -183,6 +183,8 @@ const todaysActiveCase = ((today,  yesterday) =>{
 		// todays count, yesterday count, datatest, country;
 		getPercentages(todayCases, yesterdayCases, dataText, today.country);
 
+		//return array
+
 });
 
 
@@ -204,6 +206,8 @@ const getTodaysRecoveries = ((today, yesterday) =>{
 		// todays count, yesterday count, datatest, country;
 		getPercentages(todaysRecoveries, yesterdaysRecoveries, dataText, today.country);
 
+		//return array
+
 });
 
 const getTodaysDeaths = ((today, yesterday) =>{
@@ -223,6 +227,8 @@ const getTodaysDeaths = ((today, yesterday) =>{
 		const dataText = 'Deaths';
 
 		getPercentages(todayDeaths, yesterdayDeaths, dataText, today.country);
+
+		//return array
 })
 
 const getPopulationsAndInfected = ((data) =>{
@@ -263,6 +269,8 @@ const getPopulationsAndInfected = ((data) =>{
 		console.log(`${infectedPercent.toFixed(2)}% of the population are infected.`);
 		}
 
+		//return array
+
 });
 
 //get total active case, recovery, and deaths
@@ -276,7 +284,9 @@ const getOverallDetailedCase = ((data) =>{
 
 		const country = data.country;
 
-		console.log(`${country} || Active: ${getActiveCase} | Recovered: ${getRecovered} | Deaths ${getDeaths}`)
+		console.log(`${country} || Active: ${getActiveCase} | Recovered: ${getRecovered} | Deaths ${getDeaths}`);
+
+		//return array
 
 });
 
