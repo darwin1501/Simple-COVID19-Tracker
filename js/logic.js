@@ -143,24 +143,43 @@ const caseToday = ((data1, data2, data3)=>{
 
 	console.log(`Case Today: ${dataArray}`);
 
-	const type = 'dougnut';
+	const type = 'doughnut';
 
-	const bgColor = '';
+	const bgColor = ['rgba(255, 206, 86, 1)', 'rgba(0, 230, 118, 1)', 'rgba(255,99,132,1)'];
 
-	const labels = '';
+	const labels = ['Active Case', 'Recovery', 'Deaths'];
 		
 	//req. type, data{labels, datasets{ data, bg-color}}, 
 
-
+	generateChart(type, labels, dataArray, bgColor)
 
 
 });
 
 //charts config.
-
 const generateChart = ((type, labels, data, bgColor)=>{
 		//chart config
+		//doughnut chart
+	const doughnut = document.getElementById('doughnut');
+	const doughnutConfig = new Chart(doughnut, {
+	    type: type,
+	    data: {
+	        labels: labels,
+	        datasets: [{
+	            label: '# of data',
+	            data: data,
+	            backgroundColor: bgColor,
+	            borderWidth: 1
+	        }]
+	    },
+	    options: {
+	        responsive: true, // Instruct chart js to respond nicely.
+	        maintainAspectRatio: true,
+	        cutoutPercentage: 50 // Add to prevent default behaviour of full-width/height 
+	    }
+	});
 
+	doughnutConfig.update();
 		//update chart
 });
 
