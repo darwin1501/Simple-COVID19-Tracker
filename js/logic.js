@@ -43,6 +43,8 @@ async function getData(){
 
 	generateOption(newData);
 
+	distributeData();
+
   }else{
 
     // console.log("HTTP-Error: " + response.status);
@@ -66,7 +68,7 @@ const distributeData = (() => {
 
 	const globalOldDataParsed = JSON.parse( sessionStorage.globalOldData );
 
-	getDetailedCase(newDataParsed, oldDataParsed, globalNewDataParsed, globalOldDataParsed)
+	getDetailedCase(newDataParsed, oldDataParsed, globalNewDataParsed, globalOldDataParsed);
 })
 
 const generateOption = ((data) => {
@@ -112,33 +114,50 @@ const getDetailedCase = ((newData, oldData, globalNewData, globalOldData) => {
 
 			yesterdaysData = oldData.find(data => data.country === selectedCountry);
 
-			console.log(todaysData);
-
 		}
 		//dougnut chart 1
-		todaysActiveCase(todaysData, yesterdaysData, selectedCountry);
+		const activeCase = todaysActiveCase(todaysData, yesterdaysData, selectedCountry);
 		//dougnut chart 1
-		getTodaysRecoveries(todaysData, yesterdaysData, selectedCountry);
+		const recoveries = getTodaysRecoveries(todaysData, yesterdaysData, selectedCountry);
 		//dougnut chart 1
-		getTodaysDeaths(todaysData, yesterdaysData, selectedCountry);
+		const deaths = getTodaysDeaths(todaysData, yesterdaysData, selectedCountry);
 		//pie chart 2
 		getPopulationsAndInfected(todaysData);
 		//dougnut chart 3
 		getOverallDetailedCase(todaysData, selectedCountry);
 		//card 1 and 2
 		getTestAndCritical(todaysData, selectedCountry);
+
+		caseToday(activeCase, recoveries, deaths);
 		
 });
 
-//prepare data in charts
-const caseToday = (()=>{
-		//get the data in arrays
+//prepare data in case today chart
+const caseToday = ((data1, data2, data3)=>{
 
-		//pass the data in generateChart()
-})
+	//convert it to number
+
+	const dataArray = [];
+	
+	dataArray.push(data1, data2, data3);
+
+	console.log(`Case Today: ${dataArray}`);
+
+	const type = 'dougnut';
+
+	const bgColor = '';
+
+	const labels = '';
+		
+	//req. type, data{labels, datasets{ data, bg-color}}, 
+
+
+
+
+});
 
 //charts config.
-//req. type, data{labels, datasets{ data, bg-color}}, 
+
 const generateChart = ((type, labels, data, bgColor)=>{
 		//chart config
 
@@ -222,6 +241,8 @@ const todaysActiveCase = ((today, yesterday, country) =>{
 		// todays count, yesterday count, datatest, country;
 		getPercentages(todayCases, yesterdayCases, dataText, country);
 
+		return todayCases;
+
 		// data to be return => type, labels, data, bgColor
 		//return array
 		
@@ -247,7 +268,7 @@ const getTodaysRecoveries = ((today, yesterday, country) =>{
 		// todays count, yesterday count, datatest, country;
 		getPercentages(todaysRecoveries, yesterdaysRecoveries, dataText, country);
 
-		//return array
+		return todaysRecoveries
 
 });
 
@@ -269,7 +290,7 @@ const getTodaysDeaths = ((today, yesterday, country) =>{
 
 		getPercentages(todayDeaths, yesterdayDeaths, dataText, country);
 
-		//return array
+		return todayDeaths;
 })
 
 const getPopulationsAndInfected = ((data) =>{
@@ -338,7 +359,6 @@ const getTestAndCritical = ((data, country) =>{
 
 		console.log(`${country} || Test Conducted: ${getTest} | Critical: ${getCritical}`);
 })
-
 
 
 
