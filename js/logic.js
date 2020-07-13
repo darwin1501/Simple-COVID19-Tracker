@@ -303,7 +303,12 @@ const todaysActiveCase = ((today, yesterday, country) =>{
 
 		console.log(`Yesterdays total case at ${country}: ${yesterdayCasesFormated}`);
 
-		console.log(`Data Updated ${time} ${timelbl} ago`);
+		const updateTime = document.getElementById('updateTime');
+
+		// console.log(`Data Updated ${time} ${timelbl} ago`);
+
+		updateTime.innerHTML = `Data Updated ${time} ${timelbl} ago`;
+		
 		//comparison
 		const dataText = 'Active Case';
 

@@ -16,9 +16,14 @@ html, body{
     border-radius: 20px;
     box-shadow: 2px 2px 5px 2px var(--grey-d2);
 }
+.card-header{
+	margin: 5% 5% 1% 5%;
+	width: 100%;
+}
+
 .chart-lbl {
-    margin: 5% 5% 1% 5%;
-    font-size: 12px;
+	margin-bottom: 0;
+    font-size: 14px;
     color: var(--black);
 }
 .chart-lbl-container{
@@ -66,4 +71,9 @@ header, .control{
 .text-link{
 	color: var(--black);
 	cursor: pointer;
+}
+.update-time{
+	margin-top: 0;
+	font-size: 12px;
+	color: var(--grey-d2);
 }
