@@ -228,7 +228,7 @@ const getPercentages = ((today, yesterday, dataText, country) =>{
 			label = 'decrease';
 
 		}else if(newCount < 0){
-
+			//convert negative number into positive
 			newCount = Math.abs(newCount);
 
 			totalPercentage = Math.abs(totalPercentage);
@@ -251,9 +251,59 @@ const todaysActiveCase = ((today, yesterday, country) =>{
 
 		const yesterdayCases = yesterday.todayCases;
 
+
+		//Get the last update time of the data
+
+		//milisecond
+		const ms = today.updated;
+
+		//convert milisecond of APIdata to date
+		const updateTimeToday = new Date(ms);
+
+		const dateToday = new Date();
+
+		const getMinutesAPI = updateTimeToday.getMinutes();
+
+		const getSecondsAPI = updateTimeToday.getSeconds();
+
+		const getMinutesToday = dateToday.getMinutes();
+		// subtract minutes to get the last update time of data
+		let getMinDif = getMinutesAPI - getMinutesToday;
+
+		let time;
+
+		let timelbl = 'minutes';
+
+		if(getMinDif < 0){
+
+			getMinDif = Math.abs(getMinDif);
+
+			time = getMinDif;
+
+		}else if(getMinDif === 1){
+
+			timelbl = 'minute';
+
+			time = getMinDif;
+
+		}else if(getMinDif === 0){
+
+			timelbl = 'seconds';
+
+			time = getSecondsAPI;
+
+		}else if(getSecondsAPI === 1){
+
+			timelbl = 'second';
+
+			time = getSecondsAPI;
+		}
+
 		console.log(`Todays total case at ${country}: ${todayCasesFormated}`);
 
 		console.log(`Yesterdays total case at ${country}: ${yesterdayCasesFormated}`);
+
+		console.log(`Data Updated ${time} ${timelbl} ago`);
 		//comparison
 		const dataText = 'Active Case';
 
