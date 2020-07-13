@@ -272,13 +272,20 @@ const todaysActiveCase = ((today, yesterday, country) =>{
 
 		let time;
 
-		let timelbl = 'minutes';
+		let timelbl;
 
 		if(getMinDif < 0){
 
 			getMinDif = Math.abs(getMinDif);
 
+			if(getMinDif === 1){
+
+				timelbl = 'minute';
+			}
+
 			time = getMinDif;
+
+			timelbl = 'minutes';
 
 		}else if(getMinDif === 1){
 
@@ -308,7 +315,7 @@ const todaysActiveCase = ((today, yesterday, country) =>{
 		// console.log(`Data Updated ${time} ${timelbl} ago`);
 
 		updateTime.innerHTML = `Data Updated ${time} ${timelbl} ago`;
-		
+
 		//comparison
 		const dataText = 'Active Case';
 

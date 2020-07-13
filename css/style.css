@@ -43,6 +43,9 @@ html, body{
     margin: 5% auto;
     width: 99%;
 }
+.doughnut-chart-container{
+	padding-bottom: 5%;
+}
 header, .control{
 	display: flex;
 	align-items: center;
