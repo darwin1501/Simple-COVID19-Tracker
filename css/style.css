@@ -1,15 +1,33 @@
 
 :root{
+	--black: #595959;
 	--grey-l1: #F3F3F4;
 	--grey-d1: #E3E3E3;
-	--black: #595959;
 	--grey-d2: #D7D7D7;
+	--green: #00E678;
+	--red: #FF6484;
+	--yellow: #FFCE59;
 }
 
 
 html, body{
 	font-family: 'roboto';
 	background-color: var(--grey-l1);
+}
+.active-case-container, .recovery-container, .death-container{
+	display: flex;
+	margin-top: 10px;
+}
+.active-case-lbl{
+	color: var(--black);
+}
+.active-case-lbl, .active-case-data{
+	margin: 0 5px 0 5px;
+	font-size: 12px;
+}
+.box{
+	height: 15px;
+	width: 15px;
 }
 .card-1, .card-2, .card-3 {
     background-color: white;
@@ -46,7 +64,10 @@ html, body{
 .doughnut-chart-container{
 	padding-bottom: 5%;
 }
-header, .control{
+.green{
+	background-color: var(--green);
+}
+header, .control, .sub-data-master-container{
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -60,6 +81,9 @@ header, .control{
 	text-align: center;
 	margin-bottom: 0;
 }
+.red{
+	background-color: var(--red);
+}
 .selection{
 	padding: 10px;
 	border-radius: 5px;
@@ -71,6 +95,12 @@ header, .control{
 	text-align: center;
 	margin-top: 0;
 }
+.sub-data-container{
+	margin-top: 5%;
+}
+.sub-data-master-container{
+	padding-bottom: 10%;
+}
 .text-link{
 	color: var(--black);
 	cursor: pointer;
@@ -79,4 +109,7 @@ header, .control{
 	margin-top: 0;
 	font-size: 12px;
 	color: var(--grey-d2);
+}
+.yellow{
+	background-color: var(--yellow);
 }
