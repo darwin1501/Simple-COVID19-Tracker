@@ -1,6 +1,9 @@
 
 
 @media screen and (min-width: 320px){
+	.card-1, .card-2{
+		margin-top: 5%;
+	}
 	.control{
 		margin-top: 20%;
 	}

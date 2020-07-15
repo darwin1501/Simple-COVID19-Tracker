@@ -92,7 +92,7 @@ const generateOption = ((data) => {
 	};
 })
 
-//detailed case today compared to yeterday
+
 const getDetailedCase = ((newData, oldData, globalNewData, globalOldData) => {
 
 
@@ -122,20 +122,22 @@ const getDetailedCase = ((newData, oldData, globalNewData, globalOldData) => {
 		//dougnut chart 1
 		const deaths = getTodaysDeaths(todaysData, yesterdaysData, selectedCountry);
 		//pie chart 2
-		getPopulationsAndInfected(todaysData);
+		const populationDetails = getPopulationsAndInfected(todaysData);
+
+
 		//dougnut chart 3
 		getOverallDetailedCase(todaysData, selectedCountry);
 		//card 1 and 2
 		getTestAndCritical(todaysData, selectedCountry);
 
 		caseToday(activeCase, recoveries, deaths);
+
+		population(populationDetails);
 		
 });
 
 //prepare data in case today chart
 const caseToday = ((data1, data2, data3)=>{
-
-	//convert it to number
 
 	const dataArray = [];
 	
@@ -148,20 +150,40 @@ const caseToday = ((data1, data2, data3)=>{
 	const bgColor = ['rgba(255, 206, 86, 1)', 'rgba(0, 230, 118, 1)', 'rgba(255,99,132,1)'];
 
 	const labels = ['Active Case', 'Recovery', 'Deaths'];
+
+	const elementId = 'case-today-chart';
 		
 	//req. type, data{labels, datasets{ data, bg-color}}, 
-
-	generateChart(type, labels, dataArray, bgColor)
+	generateChart(type, labels, dataArray, bgColor, elementId)
 
 
 });
 
-//charts config.
-const generateChart = ((type, labels, data, bgColor)=>{
+//prepare data in population chart
+const population = ((array) =>{
+
+	const dataArray = array
+
+	const type = 'pie';
+
+	const bgColor = ['rgba(154, 153, 254, 1)', 'rgba(255, 206, 89, 1)'];
+
+	const labels = ['uninfected', 'infected'];
+
+	const elementId = 'population-chart';
+
+	//req. type, data{labels, datasets{ data, bg-color}}, 
+	generateChart(type, labels, dataArray, bgColor, elementId);
+
+})
+
+
+//reusable chart function
+const generateChart = ((type, labels, data, bgColor, id)=>{
 		//chart config
 		//doughnut chart
-	const doughnut = document.getElementById('doughnut');
-	const doughnutConfig = new Chart(doughnut, {
+	const chart = document.getElementById(id);
+	const chartConfig = new Chart(chart, {
 	    type: type,
 	    data: {
 	        labels: labels,
@@ -178,13 +200,13 @@ const generateChart = ((type, labels, data, bgColor)=>{
 	        cutoutPercentage: 50 // Add to prevent default behaviour of full-width/height 
 	    }
 	});
-
-	doughnutConfig.update();
-		//update chart
+	//update chart
+	chartConfig.update();
+		
 });
 
 
-const getPercentages = ((today, yesterday, dataText, country) =>{
+const getPercentages = ((today, yesterday, dataText, country, lblId) =>{
 
 		//get active case and its percentage 
 
@@ -202,13 +224,25 @@ const getPercentages = ((today, yesterday, dataText, country) =>{
 
 			 label = 'increase';
 
+			 lblId.classList.add('green-txt');
+
+			 lblId.classList.remove('red-txt');
+
 		}else if(today < yesterday){
 
 			label = 'decrease';
 
+			lblId.classList.add('red-txt');
+
+			lblId.classList.remove('green-txt');
+
 		}else if (today == 0 && yesterday == 0){
 
 			label = ' ';
+
+			lblId.classList.remove('red-txt');
+
+			lblId.classList.remove('green-txt');
 		}
 
 		if(newCount === 0 && today === 0){
@@ -219,6 +253,10 @@ const getPercentages = ((today, yesterday, dataText, country) =>{
 
 			label = ' ';
 
+			lblId.classList.remove('red-txt');
+
+			lblId.classList.remove('green-txt');
+
 		}else if(newCount === 0 || today === 0){
 
 			newCount = 0;
@@ -226,6 +264,10 @@ const getPercentages = ((today, yesterday, dataText, country) =>{
 			totalPercentage = 100;
 
 			label = 'decrease';
+
+			lblId.classList.add('red-txt');
+			
+			lblId.classList.remove('green-txt');
 
 		}else if(newCount < 0){
 			//convert negative number into positive
@@ -235,9 +277,15 @@ const getPercentages = ((today, yesterday, dataText, country) =>{
 
 			label = 'decrease';
 
-		}
+			lblId.classList.add('red-txt');
+			
+			lblId.classList.remove('green-txt');
 
-		return console.log(`${dataText} at ${country}: ${newCount} | ${totalPercentage.toFixed(2)}% ${label}`);
+		}
+		//format the percentage number
+		const pcFormated = new Intl.NumberFormat().format(totalPercentage.toFixed(2));
+
+		lblId.innerHTML = `(${pcFormated}% ${label})`;
 })
 //Active Case
 const todaysActiveCase = ((today, yesterday, country) =>{
@@ -251,6 +299,12 @@ const todaysActiveCase = ((today, yesterday, country) =>{
 
 		const yesterdayCases = yesterday.todayCases;
 
+		//select element in html
+		const lblId = document.getElementById('active-case-lbl');
+
+		const dataId = document.getElementById('active-case-data');
+
+		dataId.innerHTML = todayCasesFormated;
 
 		//Get the last update time of the data
 
@@ -270,9 +324,9 @@ const todaysActiveCase = ((today, yesterday, country) =>{
 		// subtract minutes to get the last update time of data
 		let getMinDif = getMinutesAPI - getMinutesToday;
 
-		let time;
+		let time = getMinDif;
 
-		let timelbl;
+		let timelbl = 'minutes';
 
 		if(getMinDif < 0){
 
@@ -312,7 +366,7 @@ const todaysActiveCase = ((today, yesterday, country) =>{
 
 		const updateTime = document.getElementById('updateTime');
 
-		// console.log(`Data Updated ${time} ${timelbl} ago`);
+		console.log(`Data Updated ${time} ${timelbl} ago ${getMinDif}`);
 
 		updateTime.innerHTML = `Data Updated ${time} ${timelbl} ago`;
 
@@ -320,7 +374,7 @@ const todaysActiveCase = ((today, yesterday, country) =>{
 		const dataText = 'Active Case';
 
 		// todays count, yesterday count, datatest, country;
-		getPercentages(todayCases, yesterdayCases, dataText, country);
+		getPercentages(todayCases, yesterdayCases, dataText, country, lblId);
 
 		return todayCases;
 
@@ -341,13 +395,20 @@ const getTodaysRecoveries = ((today, yesterday, country) =>{
 
 		const yesterdaysRecoveries = yesterday.todayRecovered;
 
+		//select element in html
+		const lblId = document.getElementById('recovery-lbl');
+
+		const dataId = document.getElementById('recovery-data');
+
+		dataId.innerHTML = todaysRecoveriesFormated;
+
 		console.log(`Todays recovery at ${country}: ${todaysRecoveriesFormated}`);
 
 		console.log(`Yesterdays recovery at ${country}: ${yesterdayRecoveriesFormated}`);
 		//comparison
 		const dataText = 'Recovery';
 		// todays count, yesterday count, datatest, country;
-		getPercentages(todaysRecoveries, yesterdaysRecoveries, dataText, country);
+		getPercentages(todaysRecoveries, yesterdaysRecoveries, dataText, country, lblId);
 
 		return todaysRecoveries
 
@@ -363,18 +424,29 @@ const getTodaysDeaths = ((today, yesterday, country) =>{
 
 		const yesterdayDeaths = yesterday.todayDeaths;
 
+		//select element in html
+		const lblId = document.getElementById('deaths-lbl');
+
+		const dataId = document.getElementById('deaths-data');
+
+		dataId.innerHTML = todayDeathsFormated;
+
+
+
 		console.log(`Todays deaths at ${country}: ${todayDeathsFormated}`);
 
 		console.log(`Yesterdays deaths at ${country}: ${yesterdayDeathsFormated}`);
 		//comparison
 		const dataText = 'Deaths';
 
-		getPercentages(todayDeaths, yesterdayDeaths, dataText, country);
+		getPercentages(todayDeaths, yesterdayDeaths, dataText, country, lblId);
 
 		return todayDeaths;
 })
 
 const getPopulationsAndInfected = ((data) =>{
+
+
 
 		const population = data.population;
 
@@ -382,11 +454,21 @@ const getPopulationsAndInfected = ((data) =>{
 
 		const safePopulation = population - infected;
 
+		const dataArray = [safePopulation, infected];
+
+		const populationTxt = document.getElementById('population-data');
+
+		const unInfectedTxt = document.getElementById('uninfected-data');
+
+		const infectedTxt = document.getElementById('infected-data');
+
 		//format numbers
+
+		//total population
 		const populationFormated = new Intl.NumberFormat().format(population);
-
+		//total infected
 		const infectedFormated = new Intl.NumberFormat().format(infected);
-
+		//total uninfected
 		const safePopulationFormated = new Intl.NumberFormat().format(safePopulation);
 
 		//get percentage of total infected in population
@@ -403,16 +485,37 @@ const getPopulationsAndInfected = ((data) =>{
 		console.log(`Not infected ${safePopulationFormated} | infected: ${infectedFormated}`);
 		console.log(`${safePopulationPercent.toFixed(2)}% of the population are safe.`);
 
-		if(safePopulationPercent.toFixed(2) == 99.99){
+		let unInfectedPc = safePopulationPercent.toFixed(2)
+
+		let infectedPc = infectedPercent.toFixed(2)
+
+		if(safePopulationPercent.toFixed(2) == 100.00){
+
+			unInfectedPc = safePopulationPercent.toFixed(4)
+
+			infectedPc = infectedPercent.toFixed(4)
+
+		}else if(safePopulationPercent.toFixed(2) == 99.99){
 
 		console.log(`${infectedPercent.toFixed(4)}% of the population are infected.`);
+
+		infectedPc = infectedPercent.toFixed(4)
 
 		}else{
 
 		console.log(`${infectedPercent.toFixed(2)}% of the population are infected.`);
+
+		infectedPc = infectedPercent.toFixed(2)
+
 		}
 
-		//return array
+		populationTxt.innerHTML = populationFormated;
+
+		unInfectedTxt.innerHTML = `${safePopulationFormated} (${unInfectedPc}%)`;
+
+		infectedTxt.innerHTML = `${infectedFormated} (${infectedPc}%)`;
+
+		return dataArray
 
 });
 

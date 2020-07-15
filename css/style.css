@@ -1,6 +1,7 @@
 
 :root{
 	--black: #595959;
+	--blue: #9B9AFD;
 	--grey-l1: #F3F3F4;
 	--grey-d1: #E3E3E3;
 	--grey-d2: #D7D7D7;
@@ -14,16 +15,12 @@ html, body{
 	font-family: 'roboto';
 	background-color: var(--grey-l1);
 }
-.active-case-container, .recovery-container, .death-container{
+.box-container{
 	display: flex;
 	margin-top: 10px;
 }
-.active-case-lbl{
-	color: var(--black);
-}
-.active-case-lbl, .active-case-data{
-	margin: 0 5px 0 5px;
-	font-size: 12px;
+.blue{
+	background-color: var(--blue);
 }
 .box{
 	height: 15px;
@@ -49,6 +46,17 @@ html, body{
 	justify-content: flex-start;
 	align-items: center;
 }
+.container{
+	margin-left: 1%;
+	margin-right: 1%;
+}
+.data-lbl{
+	color: var(--black);
+}
+.data-lbl, .data-txt{
+	margin: 0 5px 0 5px;
+	font-size: 10px;
+}
 .divider{
 	background-color: var(--grey-d1);
     height: 2px;
@@ -67,6 +75,9 @@ html, body{
 .green{
 	background-color: var(--green);
 }
+.green-txt{
+	color: var(--green);
+}
 header, .control, .sub-data-master-container{
 	display: flex;
 	align-items: center;
@@ -84,6 +95,9 @@ header, .control, .sub-data-master-container{
 .red{
 	background-color: var(--red);
 }
+.red-txt{
+	color: var(--red);
+}
 .selection{
 	padding: 10px;
 	border-radius: 5px;
@@ -100,6 +114,16 @@ header, .control, .sub-data-master-container{
 }
 .sub-data-master-container{
 	padding-bottom: 10%;
+}
+.sub-data-lbl{
+	margin: 0 5px 5% 5px;
+	text-align: center;
+	color: var(--black);
+	font-size: 12px;
+}
+.sub-data-header{
+	display: flex;
+	justify-content: center;
 }
 .text-link{
 	color: var(--black);
