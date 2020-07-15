@@ -179,7 +179,7 @@ const population = ((array) =>{
 
 
 //reusable chart function
-const generateChart = ((type, labels, data, bgColor, id)=>{
+let generateChart = ((type, labels, data, bgColor, id)=>{
 		//chart config
 		//doughnut chart
 	const chart = document.getElementById(id);
