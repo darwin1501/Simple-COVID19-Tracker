@@ -31,11 +31,12 @@
 		</div>
 	<main>
 		<div class="dashboard-container">
+			<!-- Case Today -->
 			<div class="card-1">
 				<div class="chart-lbl-container">
 					<div class="card-header">
 						<h4 class="chart-lbl">
-			                Case Today
+			                New Case Update Today
 			            </h4>
 			            <br>
 			            <h4 class="update-time" id="updateTime">
@@ -52,7 +53,7 @@
 	           </div>
 	           <div class="sub-data-master-container">
 		           <div class="sub-data-container">
-		           		<h4 class="sub-data-lbl">Data Compared to yesterday</h4>
+		           		<h4 class="sub-data-lbl data-header">Data Compared to yesterday</h4>
 			           	<div class="box-container">
 			           		<div class="yellow box">
 			           		</div>
@@ -80,6 +81,7 @@
 				   </div>
 				</div>
 			</div>
+			<!-- Population -->
 			<div class="card-2">
 				<div class="chart-lbl-container">
 					<div class="card-header">
@@ -95,12 +97,9 @@
 	                <canvas class="pie-chart" id="population-chart">
 	                </canvas>
 	           </div>
-	           <div class="divider-sm">
-	           </div>
-	           <div class="sub-data-header">
-		           <h4 class="sub-data-lbl">Total Population:  </h4>
 		           <h4 class="sub-data-lbl" id="population-data"></h4>
-	       	   </div>
+	       	   <div class="divider-sm">
+	           </div>
 	       	   <div class="sub-data-master-container">
 		       	   <div class="sub-data-container">
 		       	   		<div class="box-container">
@@ -118,6 +117,36 @@
 		       	   </div>
 	       	   </div>
 			</div>
+			<!-- Total Case -->
+			<div class="card-3">
+				<div class="chart-lbl-container">
+					<div class="card-header">
+						<h4 class="chart-lbl">
+			                Summary of Total Case
+			            </h4>
+			            <br>
+		        	</div>
+	        	</div>
+	            <div class="divider-sm">
+	            </div>
+	            <div class="doughnut-chart-container">
+	                <canvas class="doughnut-chart" id="case-summary">
+	                </canvas>
+	           </div>
+	           		<h4 class="sub-data-lbl" id="total-case"></h4>
+	      	   <div class="divider-sm">
+	            </div>
+	      	   <div class="sub-data-master-container">
+		       	   <div class="sub-data-container">
+		       	   		<div class="box-container">
+				           	 <h4 class="sub-data-lbl" id="critical"></h4><br>
+				        </div>
+				        <div class="box-container">
+				           	<h4 class="sub-data-lbl" id="test-conducted"></h4>
+				        </div>
+		       	   </div>
+	       	   </div>
+			</div>
 		</div>
 	</main>
 </div>
@@ -127,3 +156,4 @@
 </script>
 </body>
 </html>
+

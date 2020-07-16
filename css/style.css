@@ -26,7 +26,7 @@ html, body{
 	height: 15px;
 	width: 15px;
 }
-.card-1, .card-2, .card-3 {
+.card-1, .card-2, .card-3, .card-4, .card-5{
     background-color: white;
     border-radius: 20px;
     box-shadow: 2px 2px 5px 2px var(--grey-d2);
@@ -69,9 +69,6 @@ html, body{
     margin: 5% auto;
     width: 99%;
 }
-.doughnut-chart-container{
-	padding-bottom: 5%;
-}
 .green{
 	background-color: var(--green);
 }
@@ -108,9 +105,6 @@ header, .control, .sub-data-master-container{
 .sub-txt{
 	text-align: center;
 	margin-top: 0;
-}
-.sub-data-container{
-	margin-top: 5%;
 }
 .sub-data-master-container{
 	padding-bottom: 10%;

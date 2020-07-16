@@ -95,7 +95,6 @@ const generateOption = ((data) => {
 
 const getDetailedCase = ((newData, oldData, globalNewData, globalOldData) => {
 
-
 		let selectedCountry = document.getElementById('selection').value;
 
 		let todaysData;
@@ -115,29 +114,32 @@ const getDetailedCase = ((newData, oldData, globalNewData, globalOldData) => {
 			yesterdaysData = oldData.find(data => data.country === selectedCountry);
 
 		}
-		//dougnut chart 1
+
 		const activeCase = todaysActiveCase(todaysData, yesterdaysData, selectedCountry);
-		//dougnut chart 1
+
 		const recoveries = getTodaysRecoveries(todaysData, yesterdaysData, selectedCountry);
-		//dougnut chart 1
+
 		const deaths = getTodaysDeaths(todaysData, yesterdaysData, selectedCountry);
-		//pie chart 2
+
 		const populationDetails = getPopulationsAndInfected(todaysData);
 
+		const summaryOfCase = getOverallDetailedCase(todaysData, selectedCountry); 
 
-		//dougnut chart 3
-		getOverallDetailedCase(todaysData, selectedCountry);
-		//card 1 and 2
+		//set id for two different doughnut chart
+
 		getTestAndCritical(todaysData, selectedCountry);
-
+		//predare data in charts
 		caseToday(activeCase, recoveries, deaths);
-
+		//predare data in charts
 		population(populationDetails);
+		//predare data in charts
+		caseSummary(summaryOfCase);
+
 		
 });
 
-//prepare data in case today chart
-const caseToday = ((data1, data2, data3)=>{
+//prepare data in new case update today chart
+const caseToday = ((data1, data2, data3,)=>{
 
 	const dataArray = [];
 	
@@ -151,15 +153,14 @@ const caseToday = ((data1, data2, data3)=>{
 
 	const labels = ['Active Case', 'Recovery', 'Deaths'];
 
-	const elementId = 'case-today-chart';
-		
+	const elementId = 'case-today-chart';		
 	//req. type, data{labels, datasets{ data, bg-color}}, 
 	generateChart(type, labels, dataArray, bgColor, elementId)
 
 
 });
 
-//prepare data in population chart
+//prepare data in population details chart
 const population = ((array) =>{
 
 	const dataArray = array
@@ -177,13 +178,32 @@ const population = ((array) =>{
 
 })
 
+//prepare data in population details chart
+const caseSummary = ((array) =>{
+
+	const dataArray = array
+
+	const type = 'doughnut';
+
+	const bgColor = ['rgba(255, 206, 86, 1)', 'rgba(0, 230, 118, 1)', 'rgba(255,99,132,1)'];
+
+	const labels = ['Active Case', 'Recovery', 'Deaths'];
+
+	const elementId = 'case-summary';
+
+	//req. type, data{labels, datasets{ data, bg-color}}, 
+	generateChart(type, labels, dataArray, bgColor, elementId);
+
+})
+
+
 
 //reusable chart function
 let generateChart = ((type, labels, data, bgColor, id)=>{
 		//chart config
 		//doughnut chart
-	const chart = document.getElementById(id);
-	const chartConfig = new Chart(chart, {
+	let chart = document.getElementById(id);
+	let chartConfig = new Chart(chart, {
 	    type: type,
 	    data: {
 	        labels: labels,
@@ -196,8 +216,7 @@ let generateChart = ((type, labels, data, bgColor, id)=>{
 	    },
 	    options: {
 	        responsive: true, // Instruct chart js to respond nicely.
-	        maintainAspectRatio: true,
-	        cutoutPercentage: 50 // Add to prevent default behaviour of full-width/height 
+	        maintainAspectRatio: true, // Add to prevent default behaviour of full-width/height
 	    }
 	});
 	//update chart
@@ -446,8 +465,6 @@ const getTodaysDeaths = ((today, yesterday, country) =>{
 
 const getPopulationsAndInfected = ((data) =>{
 
-
-
 		const population = data.population;
 
 		const infected = data.cases;
@@ -509,7 +526,7 @@ const getPopulationsAndInfected = ((data) =>{
 
 		}
 
-		populationTxt.innerHTML = populationFormated;
+		populationTxt.innerHTML = `Total Population: ${populationFormated}`;
 
 		unInfectedTxt.innerHTML = `${safePopulationFormated} (${unInfectedPc}%)`;
 
@@ -528,9 +545,17 @@ const getOverallDetailedCase = ((data, country) =>{
 
 		const getDeaths = data.deaths;
 
+		const dataArray = [getActiveCase, getRecovered, getDeaths];
+
+		const casesFormated = new Intl.NumberFormat().format(data.cases);
+
+		const totalCaseLbl = document.getElementById('total-case');
+
 		console.log(`${country} || Active: ${getActiveCase} | Recovered: ${getRecovered} | Deaths ${getDeaths}`);
 
-		//return array
+		totalCaseLbl.innerHTML = `Total Case: ${casesFormated}`;
+
+		return dataArray
 
 });
 
@@ -540,6 +565,20 @@ const getTestAndCritical = ((data, country) =>{
 		const getTest = data.tests;
 
 		const getCritical = data.critical;
+
+		//format numbers
+
+		const testFormated = new Intl.NumberFormat().format(getTest);
+
+		const criticalFormated = new Intl.NumberFormat().format(getCritical);
+
+		const criticalLbl = document.getElementById('critical');
+
+		const testConductedLbl = document.getElementById('test-conducted');
+
+		criticalLbl.innerHTML = `Critical: ${criticalFormated}`;
+
+		testConductedLbl.innerHTML = `Test Conducted: ${testFormated}`;
 
 		console.log(`${country} || Test Conducted: ${getTest} | Critical: ${getCritical}`);
 })
