@@ -1,159 +1,221 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>COVID-19 Tracker</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" type="text/css" href="css/Chart.css">
-	<link rel="stylesheet" type="text/css" href="css/style.css">
-	<link rel="stylesheet" type="text/css" href="css/breakpoints.css">
-</head>
-<body>
-	<div class="container">
-		<header>
-			<div class="header-content">
-				<div class="header-txt-container">
-					<h2 class="header-txt">COVID-19 Dashboard
-					</h2><br>
-					<p class="sub-txt">Data Provided by:&nbsp;<a href="https://corona.lmao.ninja/docs/#/" target="_blank" class="text-link">NOVELCovid/API</a>
-					</p>
-				</div>
-				<div class="control">
-					<div class="selection-container">
-						<select class="selection" id="selection" onchange="distributeData()">
-							<option value="global" selected="selected">Global</option>
-						</select>
-					</div>
-				</div>
-			</div>
-		</header>
-		<div class="divider">
-		</div>
-	<main>
-		<div class="dashboard-container">
-			<!-- Case Today -->
-			<div class="card-1">
-				<div class="chart-lbl-container">
-					<div class="card-header">
-						<h4 class="chart-lbl">
-			                New Case Update Today
-			            </h4>
-			            <br>
-			            <h4 class="update-time" id="updateTime">
-			            </h4>
-		        	</div>
-	        	</div>
-	            <div class="divider-sm">
-	            </div>
-	            <div class="doughnut-chart-container">
-	                <canvas class="doughnut-chart" id="case-today-chart">
-	                </canvas>
-	           </div>
-	           <div class="divider-sm">
-	           </div>
-	           <div class="sub-data-master-container">
-		           <div class="sub-data-container">
-		           		<h4 class="sub-data-lbl data-header">Data Compared to yesterday</h4>
-			           	<div class="box-container">
-			           		<div class="yellow box">
-			           		</div>
-			           		<h4 class="data-lbl">Active Case:</h4>
-			           		<h4 class="data-txt" id="active-case-data"></h4>
-			           		<h4 class="data-txt" id="active-case-lbl">		       
-			           		</h4>
-			            </div>
-			            <div class="box-container">
-			           		<div class="green box">
-			           		</div>
-			           		<h4 class="data-lbl">Recovery:</h4>
-			           		<h4 class="data-txt" id="recovery-data"></h4>
-			           		<h4 class="data-txt" id="recovery-lbl">      
-			           		</h4>
-			            </div>
-			            <div class="box-container">
-			           		<div class="red box">
-			           		</div>
-			           		<h4 class="data-lbl">Deaths:</h4>
-			           		<h4 class="data-txt" id="deaths-data"></h4>
-			           		<h4 class="data-txt" id="deaths-lbl">      
-			           		</h4>
-			            </div>
-				   </div>
-				</div>
-			</div>
-			<!-- Population -->
-			<div class="card-2">
-				<div class="chart-lbl-container">
-					<div class="card-header">
-						<h4 class="chart-lbl">
-			                Population Details
-			            </h4>
-			            <br>
-		        	</div>
-	        	</div>
-	            <div class="divider-sm">
-	            </div>
-	            <div class="pie-chart-container">
-	                <canvas class="pie-chart" id="population-chart">
-	                </canvas>
-	           </div>
-		           <h4 class="sub-data-lbl" id="population-data"></h4>
-	       	   <div class="divider-sm">
-	           </div>
-	       	   <div class="sub-data-master-container">
-		       	   <div class="sub-data-container">
-		       	   		<div class="box-container">
-				           	<div class="blue box">
-				           	</div>
-				           	<h4 class="data-lbl">Uninfected:</h4>
-				           	<h4 class="data-txt" id="uninfected-data"></h4>
-				        </div>
-				        <div class="box-container">
-				           	<div class="yellow box">
-				           	</div>
-				           	<h4 class="data-lbl">Infected:</h4>
-				           	<h4 class="data-txt" id="infected-data"></h4>
-				        </div>
-		       	   </div>
-	       	   </div>
-			</div>
-			<!-- Total Case -->
-			<div class="card-3">
-				<div class="chart-lbl-container">
-					<div class="card-header">
-						<h4 class="chart-lbl">
-			                Summary of Total Case
-			            </h4>
-			            <br>
-		        	</div>
-	        	</div>
-	            <div class="divider-sm">
-	            </div>
-	            <div class="doughnut-chart-container">
-	                <canvas class="doughnut-chart" id="case-summary">
-	                </canvas>
-	           </div>
-	           		<h4 class="sub-data-lbl" id="total-case"></h4>
-	      	   <div class="divider-sm">
-	            </div>
-	      	   <div class="sub-data-master-container">
-		       	   <div class="sub-data-container">
-		       	   		<div class="box-container">
-				           	 <h4 class="sub-data-lbl" id="critical"></h4><br>
-				        </div>
-				        <div class="box-container">
-				           	<h4 class="sub-data-lbl" id="test-conducted"></h4>
-				        </div>
-		       	   </div>
-	       	   </div>
-			</div>
-		</div>
-	</main>
-</div>
-<script src="js/Chart.min.js">
-</script>
-<script src="js/logic.js">
-</script>
-</body>
+    <head>
+        <title>
+            COVID-19 Tracker
+        </title>
+        <meta charset="utf-8">
+            <meta content="width=device-width, initial-scale=1" name="viewport">
+                <link href="css/Chart.css" rel="stylesheet" type="text/css">
+                    <link href="css/style.css" rel="stylesheet" type="text/css">
+                        <link href="css/breakpoints.css" rel="stylesheet" type="text/css">
+                        </link>
+                    </link>
+                </link>
+            </meta>
+        </meta>
+    </head>
+    <body>
+        <header>
+            <div class="header-content">
+                <div class="header-txt-container">
+                    <h2 class="header-txt">
+                        COVID-19 Dashboard
+                    </h2>
+                    <br>
+                        <p class="sub-txt">
+                            Data Provided by:
+                            <a class="text-link" href="https://corona.lmao.ninja/docs/#/" target="_blank">
+                                NOVELCovid/API
+                            </a>
+                        </p>
+                    </br>
+                </div>
+                <div class="control">
+                    <div class="selection-container">
+                        <h2 class="control-lbl">
+                            View By:
+                        </h2>
+                        <select class="selection" id="selection" onchange="distributeData()">
+                            <option selected="selected" value="global">
+                                Global
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="divider">
+        </div>
+        <div class="container">
+            <main>
+                <div class="dashboard-container">
+                    <!-- Case Today -->
+                    <div class="card-1">
+                        <div class="card-content">
+                            <div class="chart-lbl-container">
+                                <div class="card-header">
+                                    <h4 class="chart-lbl">
+                                        New Case Update Today
+                                    </h4>
+                                    <br>
+                                        <h4 class="update-time" id="updateTime">
+                                        </h4>
+                                    </br>
+                                </div>
+                            </div>
+                            <div class="divider-sm">
+                            </div>
+                            <div class="doughnut-chart-container">
+                                <canvas class="doughnut-chart" id="case-today-chart">
+                                </canvas>
+                            </div>
+                            <div class="divider-sm">
+                            </div>
+                            <div class="sub-data-master-container">
+                                <div class="sub-data-container">
+                                    <h4 class="sub-data-lbl data-header">
+                                        Data Compared to yesterday
+                                    </h4>
+                                    <div class="box-container">
+                                        <div class="yellow box">
+                                        </div>
+                                        <h4 class="data-lbl">
+                                            Active Case:
+                                        </h4>
+                                        <h4 class="data-txt" id="active-case-data">
+                                        </h4>
+                                        <h4 class="data-txt" id="active-case-lbl">
+                                        </h4>
+                                    </div>
+                                    <div class="box-container">
+                                        <div class="green box">
+                                        </div>
+                                        <h4 class="data-lbl">
+                                            Recovery:
+                                        </h4>
+                                        <h4 class="data-txt" id="recovery-data">
+                                        </h4>
+                                        <h4 class="data-txt" id="recovery-lbl">
+                                        </h4>
+                                    </div>
+                                    <div class="box-container">
+                                        <div class="red box">
+                                        </div>
+                                        <h4 class="data-lbl">
+                                            Deaths:
+                                        </h4>
+                                        <h4 class="data-txt" id="deaths-data">
+                                        </h4>
+                                        <h4 class="data-txt" id="deaths-lbl">
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Population -->
+                    <div class="card-2">
+                        <div class="card-content">
+                            <div class="chart-lbl-container">
+                                <div class="card-header">
+                                    <h4 class="chart-lbl">
+                                        Population Details
+                                    </h4>
+                                    <br>
+                                    </br>
+                                </div>
+                            </div>
+                            <div class="divider-sm">
+                            </div>
+                            <div class="pie-chart-container">
+                                <canvas class="pie-chart" id="population-chart">
+                                </canvas>
+                            </div>
+                            <h4 class="sub-data-lbl" id="population-data">
+                            </h4>
+                            <div class="divider-sm">
+                            </div>
+                            <div class="sub-data-master-container">
+                                <div class="sub-data-container">
+                                    <div class="box-container">
+                                        <div class="blue box">
+                                        </div>
+                                        <h4 class="data-lbl">
+                                            Uninfected:
+                                        </h4>
+                                        <h4 class="data-txt" id="uninfected-data">
+                                        </h4>
+                                    </div>
+                                    <div class="box-container">
+                                        <div class="yellow box">
+                                        </div>
+                                        <h4 class="data-lbl">
+                                            Infected:
+                                        </h4>
+                                        <h4 class="data-txt" id="infected-data">
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Total Case -->
+                    <div class="card-3">
+                        <div class="card-content">
+                            <div class="chart-lbl-container">
+                                <div class="card-header">
+                                    <h4 class="chart-lbl">
+                                        Summary of Total Case
+                                    </h4>
+                                    <br>
+                                    </br>
+                                </div>
+                            </div>
+                            <div class="divider-sm">
+                            </div>
+                            <div class="doughnut-chart-container">
+                                <canvas class="doughnut-chart" id="case-summary">
+                                </canvas>
+                            </div>
+                            <h4 class="sub-data-lbl" id="total-case">
+                            </h4>
+                            <div class="divider-sm">
+                            </div>
+                            <div class="sub-data-master-container">
+                                <div class="sub-data-container">
+                                    <div class="box-container">
+                                        <h4 class="data-lbl" id="critical">
+                                        </h4>
+                                        <br>
+                                        </br>
+                                    </div>
+                                    <div class="box-container">
+                                        <h4 class="data-lbl" id="test-conducted">
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+        <footer>
+            <div class="footer-content">
+                <h3>
+                    Created By:
+                </h3>
+                <div class="footer-btn">
+                    <p class="footer-btn-txt">
+                        Darwin
+                    </p>
+                </div>
+            </div>
+        </footer>
+        <script src="js/Chart.min.js">
+        </script>
+        <script src="js/logic.js">
+        </script>
+    </body>
 </html>
-
