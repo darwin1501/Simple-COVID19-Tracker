@@ -8,7 +8,47 @@ const covid19GlobalData1 = 'https://disease.sh/v3/covid-19/all?yesterday=false&a
 const covid19GlobalData2 = 'https://disease.sh/v3/covid-19/all?yesterday=true&allowNull=false';
 
 
+const selection = document.getElementsByClassName('selection-container');
+
+const todayChart = document.getElementById('case-today-chart');
+
+const populationChart = document.getElementById('population-chart');
+
+const caseSummaryChart = document.getElementById('case-summary');
+
+const subDataContainer = document.getElementsByClassName('sub-data-container');
+
+//hide all elements that is not ready
+selection[0].classList.add("hidden");
+
+todayChart.classList.add("hidden");
+
+populationChart.classList.add("hidden");
+
+caseSummaryChart.classList.add("hidden");
+
+for (let element = 0; element < subDataContainer.length; element++) {
+
+		subDataContainer[element].classList.add('hidden');
+
+	};
+
+
+
+
 async function getData(){
+
+	const loading = document.getElementsByClassName('loading');
+
+	const selection = document.getElementsByClassName('selection-container');
+
+	const todayChart = document.getElementById('case-today-chart');
+
+	const populationChart = document.getElementById('population-chart');
+
+	const caseSummaryChart = document.getElementById('case-summary');
+
+	const subDataContainer = document.getElementsByClassName('sub-data-container');
 
     let todaysData = await fetch(covid19Data1);
 
@@ -18,7 +58,7 @@ async function getData(){
 
     let globalYesterdayData = await fetch(covid19GlobalData2);
 
-    let responseArray = [todaysData, yesterdaysData]
+    // let responseArray = [todaysData, yesterdaysData]
 
   if((todaysData.ok && yesterdaysData.ok) && (globalTodayData.ok && globalYesterdayData.ok)){
 
@@ -41,6 +81,27 @@ async function getData(){
 
     sessionStorage.globalOldData = JSON.stringify(globalOldData);
 
+    selection[0].classList.remove('hidden');
+
+    todayChart.classList.remove("hidden");
+
+	populationChart.classList.remove("hidden");
+
+	caseSummaryChart.classList.remove("hidden");
+
+	//hide all loading element
+	for (let element = 0; element < loading.length; element++) {
+
+		loading[element].classList.add('hidden');
+
+	};
+
+	for (let element = 0; element < subDataContainer.length; element++) {
+
+		subDataContainer[element].classList.remove('hidden');
+
+	};
+
 	generateOption(newData);
 
 	distributeData();
@@ -48,11 +109,10 @@ async function getData(){
   }else{
 
     // console.log("HTTP-Error: " + response.status);
-    console.log('load error')
 
   }
 
-  return responseArray;
+  // return responseArray;
 
 }
 
@@ -145,7 +205,7 @@ const caseToday = ((data1, data2, data3,)=>{
 	
 	dataArray.push(data1, data2, data3);
 
-	console.log(`Case Today: ${dataArray}`);
+	// console.log(`Case Today: ${dataArray}`);
 
 	const type = 'doughnut';
 
@@ -379,13 +439,13 @@ const todaysActiveCase = ((today, yesterday, country) =>{
 			time = getSecondsAPI;
 		}
 
-		console.log(`Todays total case at ${country}: ${todayCasesFormated}`);
+		// console.log(`Todays total case at ${country}: ${todayCasesFormated}`);
 
-		console.log(`Yesterdays total case at ${country}: ${yesterdayCasesFormated}`);
+		// console.log(`Yesterdays total case at ${country}: ${yesterdayCasesFormated}`);
 
 		const updateTime = document.getElementById('updateTime');
 
-		console.log(`Data Updated ${time} ${timelbl} ago ${getMinDif}`);
+		// console.log(`Data Updated ${time} ${timelbl} ago ${getMinDif}`);
 
 		updateTime.innerHTML = `Data Updated ${time} ${timelbl} ago`;
 
@@ -421,9 +481,9 @@ const getTodaysRecoveries = ((today, yesterday, country) =>{
 
 		dataId.innerHTML = todaysRecoveriesFormated;
 
-		console.log(`Todays recovery at ${country}: ${todaysRecoveriesFormated}`);
+		// console.log(`Todays recovery at ${country}: ${todaysRecoveriesFormated}`);
 
-		console.log(`Yesterdays recovery at ${country}: ${yesterdayRecoveriesFormated}`);
+		// console.log(`Yesterdays recovery at ${country}: ${yesterdayRecoveriesFormated}`);
 		//comparison
 		const dataText = 'Recovery';
 		// todays count, yesterday count, datatest, country;
@@ -449,12 +509,9 @@ const getTodaysDeaths = ((today, yesterday, country) =>{
 		const dataId = document.getElementById('deaths-data');
 
 		dataId.innerHTML = todayDeathsFormated;
+		// console.log(`Todays deaths at ${country}: ${todayDeathsFormated}`);
 
-
-
-		console.log(`Todays deaths at ${country}: ${todayDeathsFormated}`);
-
-		console.log(`Yesterdays deaths at ${country}: ${yesterdayDeathsFormated}`);
+		// console.log(`Yesterdays deaths at ${country}: ${yesterdayDeathsFormated}`);
 		//comparison
 		const dataText = 'Deaths';
 
@@ -498,9 +555,9 @@ const getPopulationsAndInfected = ((data) =>{
 		//convert into percentage
 		const safePopulationPercent = dividedSafePopulation * 100;
 
-		console.log(`Total population: ${populationFormated}`);
-		console.log(`Not infected ${safePopulationFormated} | infected: ${infectedFormated}`);
-		console.log(`${safePopulationPercent.toFixed(2)}% of the population are safe.`);
+		// console.log(`Total population: ${populationFormated}`);
+		// console.log(`Not infected ${safePopulationFormated} | infected: ${infectedFormated}`);
+		// console.log(`${safePopulationPercent.toFixed(2)}% of the population are safe.`);
 
 		let unInfectedPc = safePopulationPercent.toFixed(2)
 
@@ -514,13 +571,13 @@ const getPopulationsAndInfected = ((data) =>{
 
 		}else if(safePopulationPercent.toFixed(2) == 99.99){
 
-		console.log(`${infectedPercent.toFixed(4)}% of the population are infected.`);
+		// console.log(`${infectedPercent.toFixed(4)}% of the population are infected.`);
 
 		infectedPc = infectedPercent.toFixed(4)
 
 		}else{
 
-		console.log(`${infectedPercent.toFixed(2)}% of the population are infected.`);
+		// console.log(`${infectedPercent.toFixed(2)}% of the population are infected.`);
 
 		infectedPc = infectedPercent.toFixed(2)
 
@@ -551,7 +608,7 @@ const getOverallDetailedCase = ((data, country) =>{
 
 		const totalCaseLbl = document.getElementById('total-case');
 
-		console.log(`${country} || Active: ${getActiveCase} | Recovered: ${getRecovered} | Deaths ${getDeaths}`);
+		// console.log(`${country} || Active: ${getActiveCase} | Recovered: ${getRecovered} | Deaths ${getDeaths}`);
 
 		totalCaseLbl.innerHTML = `Total Case: ${casesFormated}`;
 
@@ -580,7 +637,7 @@ const getTestAndCritical = ((data, country) =>{
 
 		testConductedLbl.innerHTML = `Test Conducted: ${testFormated}`;
 
-		console.log(`${country} || Test Conducted: ${getTest} | Critical: ${getCritical}`);
+		// console.log(`${country} || Test Conducted: ${getTest} | Critical: ${getCritical}`);
 })
 
 

@@ -32,7 +32,10 @@
                     </br>
                 </div>
                 <div class="control">
-                    <div class="selection-container">
+<!--                     <div class="loading" id="loading">
+                        <div class="lds-facebook"><div></div><div></div><div></div></div>
+                    </div> -->
+                    <div class="selection-container">                  
                         <h2 class="control-lbl">
                             View By:
                         </h2>
@@ -40,7 +43,7 @@
                             <option selected="selected" value="global">
                                 Global
                             </option>
-                        </select>                     
+                        </select>                    
                     </div>              
                 </div>
             </div>
@@ -65,15 +68,18 @@
                             <div class="divider-sm">
                             </div>
                             <div class="doughnut-chart-container">
+                                <div class="loading" id="loading">
+                                    <div class="lds-facebook"><div></div><div></div><div></div></div>
+                                </div>
                                 <canvas class="doughnut-chart" id="case-today-chart">
                                 </canvas>
                             </div>
                             <div class="divider-sm">
-                            </div>
+                            </div>                          
                             <div class="sub-data-master-container">
                                 <div class="sub-data-container">
                                     <h4 class="sub-data-lbl data-header">
-                                        Data Compared to yesterday
+                                        Today Compared to Yesterday
                                     </h4>
                                     <div class="box-container">
                                         <div class="yellow box">
@@ -125,6 +131,9 @@
                             <div class="divider-sm">
                             </div>
                             <div class="pie-chart-container">
+                                <div class="loading" id="loading">
+                                    <div class="lds-facebook"><div></div><div></div><div></div></div>
+                                </div>
                                 <canvas class="pie-chart" id="population-chart">
                                 </canvas>
                             </div>
@@ -134,6 +143,9 @@
                             </div>
                             <div class="sub-data-master-container">
                                 <div class="sub-data-container">
+                                    <h4 class="sub-data-lbl data-header">
+                                        Uninfected and Infected Details
+                                    </h4>
                                     <div class="box-container">
                                         <div class="blue box">
                                         </div>
@@ -169,6 +181,9 @@
                             <div class="divider-sm">
                             </div>
                             <div class="doughnut-chart-container">
+                                <div class="loading" id="loading">
+                                    <div class="lds-facebook"><div></div><div></div><div></div></div>
+                                </div>
                                 <canvas class="doughnut-chart" id="case-summary">
                                 </canvas>
                             </div>
@@ -178,6 +193,9 @@
                             </div>
                             <div class="sub-data-master-container">
                                 <div class="sub-data-container">
+                                    <h4 class="sub-data-lbl data-header">
+                                        Other Informations
+                                    </h4>
                                     <div class="box-container">
                                         <h4 class="data-lbl" id="critical">
                                         </h4>

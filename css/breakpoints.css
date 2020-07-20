@@ -103,6 +103,9 @@
         grid-template: repeat(3, 33%) / repeat(3, 1fr);
         grid-gap: 10px;
     }
+    .card-1 > .card-content > .doughnut-chart-container{
+    	padding-bottom: 36px;
+    }
 	.divider{
 		margin: 0 0 2% 0;
 	}
@@ -129,6 +132,9 @@
 		align-items: center;
 		justify-content: center;
 	}
-
-
+}
+@media screen and (min-width: 1300px){
+	.dashboard-container {
+		width: 1200px;
+    }
 }
