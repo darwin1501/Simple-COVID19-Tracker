@@ -545,9 +545,9 @@ const getPopulationsAndInfected = ((data) =>{
 		//total uninfected
 		const safePopulationFormated = new Intl.NumberFormat().format(safePopulation);
 
-		//get percentage of total infected in population
+		//formula in geting percetages
 		const dividedInfection = infected / population ;
-		//convert into percentage
+
 		const infectedPercent = dividedInfection * 100;
 
 		//get percentage of total not infected in population
@@ -603,14 +603,32 @@ const getOverallDetailedCase = ((data, country) =>{
 		const getDeaths = data.deaths;
 
 		const dataArray = [getActiveCase, getRecovered, getDeaths];
+		//format number
+		const activeCaseFormated = new Intl.NumberFormat().format(getActiveCase);
+
+		const recoveredFormated = new Intl.NumberFormat().format(getRecovered);
+
+		const deathsFormated = new Intl.NumberFormat().format(getDeaths);
 
 		const casesFormated = new Intl.NumberFormat().format(data.cases);
 
 		const totalCaseLbl = document.getElementById('total-case');
 
+		const activeCaseLbl = document.getElementById('total-active-case-data');
+
+		const recoveredLbl = document.getElementById('total-recovery-data');
+
+		const deathsLbl = document.getElementById('total-deaths-data');
+
 		// console.log(`${country} || Active: ${getActiveCase} | Recovered: ${getRecovered} | Deaths ${getDeaths}`);
 
 		totalCaseLbl.innerHTML = `Total Case: ${casesFormated}`;
+
+		activeCaseLbl.innerHTML = activeCaseFormated;
+
+		recoveredLbl.innerHTML = recoveredFormated;
+
+		deathsLbl.innerHTML = deathsFormated;
 
 		return dataArray
 
@@ -623,11 +641,24 @@ const getTestAndCritical = ((data, country) =>{
 
 		const getCritical = data.critical;
 
-		//format numbers
+		const totalPopulation = data.population;
 
+
+		//formula in geting percetages
+
+		const testDivided = getTest / totalPopulation ;
+
+		const testPercent = testDivided * 100;
+		//format numbers
 		const testFormated = new Intl.NumberFormat().format(getTest);
 
 		const criticalFormated = new Intl.NumberFormat().format(getCritical);
+
+		const totalPopulationFormated = new Intl.NumberFormat().format(totalPopulation);
+
+		const testPercentFormated = new Intl.NumberFormat().format(testPercent.toFixed(2));
+
+		const getTestFormated = new Intl.NumberFormat().format(getTest);
 
 		const criticalLbl = document.getElementById('critical');
 
@@ -635,7 +666,7 @@ const getTestAndCritical = ((data, country) =>{
 
 		criticalLbl.innerHTML = `Critical: ${criticalFormated}`;
 
-		testConductedLbl.innerHTML = `Test Conducted: ${testFormated}`;
+		testConductedLbl.innerHTML = `${getTestFormated}(${testPercentFormated}%) of the Total Population has been tested.`;
 
 		// console.log(`${country} || Test Conducted: ${getTest} | Critical: ${getCritical}`);
 })

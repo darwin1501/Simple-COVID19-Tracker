@@ -187,6 +187,10 @@ header, .control, .sub-data-master-container{
 	display: flex;
 	justify-content: center;
 }
+.sub-data-container{
+  margin-left: 5%;
+  margin-right: 5%;
+}
 .text-link{
 	color: var(--black);
 	cursor: pointer;
