@@ -1,12 +1,25 @@
-//today's data case per country
-const covid19Data1 = 'https://disease.sh/v3/covid-19/countries?yesterday=false&allowNull=false';
-//yesterday's data case per country
-const covid19Data2 = 'https://disease.sh/v3/covid-19/countries?yesterday=true&allowNull=false';
-//global data today
-const covid19GlobalData1 = 'https://disease.sh/v3/covid-19/all?yesterday=false&allowNull=false';
-//global data yesterday
-const covid19GlobalData2 = 'https://disease.sh/v3/covid-19/all?yesterday=true&allowNull=false';
 
+//generate random number
+//random will use to force reload XHR and get the latest data in API request url
+const rnNum1 = Math.floor((Math.random() * 1000) + 1);
+
+const rnNum2 = Math.floor((Math.random() * 1000) + 1);
+
+const rnNum3 = Math.floor((Math.random() * 1000) + 1);
+
+const rnNum4 = Math.floor((Math.random() * 1000) + 1);
+
+//today's data case per country
+const covid19Data1 = `https://disease.sh/v3/covid-19/countries?yesterday=false&allowNull=false?rnd=${rnNum1}`;
+//yesterday's data case per country
+const covid19Data2 = `https://disease.sh/v3/covid-19/countries?yesterday=true&allowNull=false?rnd=${rnNum2}`;
+//global data today
+const covid19GlobalData1 = `https://disease.sh/v3/covid-19/all?yesterday=false&allowNull=false?rnd=${rnNum3}`;
+//global data yesterday
+const covid19GlobalData2 = `https://disease.sh/v3/covid-19/all?yesterday=true&allowNull=false?rnd=${rnNum4}`;
+
+// window.location.reload(true);
+// window.location.reload(false);
 
 const selection = document.getElementsByClassName('selection-container');
 
@@ -69,9 +82,11 @@ async function getData(){
     let globalNewData = await globalTodayData.json();
 
     let globalOldData =  await globalYesterdayData.json();
-   
-   //clear session storage
-    sessionStorage.clear()
+
+    //clear local storage of browser
+    localStorage.clear();
+    //clear session storage
+    sessionStorage.clear();
     //store in session
     sessionStorage.newData = JSON.stringify(newData);
 
@@ -423,6 +438,12 @@ const todaysActiveCase = ((today, yesterday, country) =>{
 		}else if(getMinDif === 1){
 
 			timelbl = 'minute';
+
+			time = getMinDif;
+
+		}else if(getMinDif > 1){
+
+			timelbl = 'minutes';
 
 			time = getMinDif;
 
