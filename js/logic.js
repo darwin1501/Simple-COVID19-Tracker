@@ -1,25 +1,15 @@
 
-//generate random number
-//random will use to force reload XHR and get the latest data in API request url
-const rnNum1 = Math.floor((Math.random() * 1000) + 1);
 
-const rnNum2 = Math.floor((Math.random() * 1000) + 1);
-
-const rnNum3 = Math.floor((Math.random() * 1000) + 1);
-
-const rnNum4 = Math.floor((Math.random() * 1000) + 1);
+const miliSeconds = Date.now()
 
 //today's data case per country
-const covid19Data1 = `https://disease.sh/v3/covid-19/countries?yesterday=false&allowNull=false?rnd=${rnNum1}`;
+const covid19Data1 = `https://disease.sh/v3/covid-19/countries?yesterday=false&allowNull=false?rnd=${miliSeconds}`;
 //yesterday's data case per country
-const covid19Data2 = `https://disease.sh/v3/covid-19/countries?yesterday=true&allowNull=false?rnd=${rnNum2}`;
+const covid19Data2 = `https://disease.sh/v3/covid-19/countries?yesterday=true&allowNull=false?rnd=${miliSeconds}`;
 //global data today
-const covid19GlobalData1 = `https://disease.sh/v3/covid-19/all?yesterday=false&allowNull=false?rnd=${rnNum3}`;
+const covid19GlobalData1 = `https://disease.sh/v3/covid-19/all?yesterday=false&allowNull=false?rnd=${miliSeconds}`;
 //global data yesterday
-const covid19GlobalData2 = `https://disease.sh/v3/covid-19/all?yesterday=true&allowNull=false?rnd=${rnNum4}`;
-
-// window.location.reload(true);
-// window.location.reload(false);
+const covid19GlobalData2 = `https://disease.sh/v3/covid-19/all?yesterday=true&allowNull=false?rnd=${miliSeconds}`;
 
 const selection = document.getElementsByClassName('selection-container');
 
@@ -45,9 +35,6 @@ for (let element = 0; element < subDataContainer.length; element++) {
 		subDataContainer[element].classList.add('hidden');
 
 	};
-
-
-
 
 async function getData(){
 
@@ -167,7 +154,6 @@ const generateOption = ((data) => {
 	};
 })
 
-
 const getDetailedCase = ((newData, oldData, globalNewData, globalOldData) => {
 
 		let selectedCountry = document.getElementById('selection').value;
@@ -231,8 +217,6 @@ const caseToday = ((data1, data2, data3,)=>{
 	const elementId = 'case-today-chart';		
 	//req. type, data{labels, datasets{ data, bg-color}}, 
 	generateChart(type, labels, dataArray, bgColor, elementId)
-
-
 });
 
 //prepare data in population details chart
@@ -250,7 +234,6 @@ const population = ((array) =>{
 
 	//req. type, data{labels, datasets{ data, bg-color}}, 
 	generateChart(type, labels, dataArray, bgColor, elementId);
-
 })
 
 //prepare data in population details chart
@@ -268,10 +251,7 @@ const caseSummary = ((array) =>{
 
 	//req. type, data{labels, datasets{ data, bg-color}}, 
 	generateChart(type, labels, dataArray, bgColor, elementId);
-
 })
-
-
 
 //reusable chart function
 let generateChart = ((type, labels, data, bgColor, id)=>{
@@ -298,7 +278,6 @@ let generateChart = ((type, labels, data, bgColor, id)=>{
 	chartConfig.update();
 		
 });
-
 
 const getPercentages = ((today, yesterday, dataText, country, lblId) =>{
 
@@ -412,7 +391,7 @@ const todaysActiveCase = ((today, yesterday, country) =>{
 
 		const getMinutesAPI = updateTimeToday.getMinutes();
 
-		const getSecondsAPI = updateTimeToday.getSeconds();
+		let getSecondsAPI = updateTimeToday.getSeconds();
 
 		const getMinutesToday = dateToday.getMinutes();
 		// subtract minutes to get the last update time of data
@@ -428,12 +407,17 @@ const todaysActiveCase = ((today, yesterday, country) =>{
 
 			if(getMinDif === 1){
 
+				time = getMinDif;
+
 				timelbl = 'minute';
-			}
+
+			}else{
 
 			time = getMinDif;
 
 			timelbl = 'minutes';
+
+			}
 
 		}else if(getMinDif === 1){
 
@@ -449,16 +433,19 @@ const todaysActiveCase = ((today, yesterday, country) =>{
 
 		}else if(getMinDif === 0){
 
-			timelbl = 'seconds';
+			if(getSecondsAPI === 1){
 
-			time = getSecondsAPI;
+				timelbl = 'second';
 
-		}else if(getSecondsAPI === 1){
+				time = getSecondsAPI;
+			}else {
 
-			timelbl = 'second';
+				timelbl = 'seconds';
 
-			time = getSecondsAPI;
-		}
+				time = getSecondsAPI;
+
+			}
+	   }
 
 		// console.log(`Todays total case at ${country}: ${todayCasesFormated}`);
 
@@ -476,12 +463,7 @@ const todaysActiveCase = ((today, yesterday, country) =>{
 		// todays count, yesterday count, datatest, country;
 		getPercentages(todayCases, yesterdayCases, dataText, country, lblId);
 
-		return todayCases;
-
-		// data to be return => type, labels, data, bgColor
-		//return array
-		
-
+		return todayCases;	
 });
 
 
@@ -511,7 +493,6 @@ const getTodaysRecoveries = ((today, yesterday, country) =>{
 		getPercentages(todaysRecoveries, yesterdaysRecoveries, dataText, country, lblId);
 
 		return todaysRecoveries
-
 });
 
 const getTodaysDeaths = ((today, yesterday, country) =>{
@@ -611,7 +592,6 @@ const getPopulationsAndInfected = ((data) =>{
 		infectedTxt.innerHTML = `${infectedFormated} (${infectedPc}%)`;
 
 		return dataArray
-
 });
 
 //get total active case, recovery, and deaths
@@ -652,7 +632,6 @@ const getOverallDetailedCase = ((data, country) =>{
 		deathsLbl.innerHTML = deathsFormated;
 
 		return dataArray
-
 });
 
 //get test conducted and critical
@@ -663,7 +642,6 @@ const getTestAndCritical = ((data, country) =>{
 		const getCritical = data.critical;
 
 		const totalPopulation = data.population;
-
 
 		//formula in geting percetages
 
