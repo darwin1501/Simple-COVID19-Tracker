@@ -210,13 +210,15 @@ const caseToday = ((data1, data2, data3,)=>{
 
 	const type = 'doughnut';
 
-	const bgColor = ['rgba(255, 206, 86, 1)', 'rgba(0, 230, 118, 1)', 'rgba(255,99,132,1)'];
+	const bgColor = ['rgba(255, 206, 86, 1)', 'rgba(0, 230, 118, 1)', 'rgba(255,99,132, 1'];
+
+	const borderColor = ['rgba(255, 206, 86, 1)', 'rgba(0, 230, 118, 1)', 'rgba(255,99,132,1)'];
 
 	const labels = ['Active Case', 'Recovery', 'Deaths'];
 
 	const elementId = 'case-today-chart';		
 	//req. type, data{labels, datasets{ data, bg-color}}, 
-	generateChart(type, labels, dataArray, bgColor, elementId)
+	generateChart(type, labels, dataArray, bgColor, elementId, borderColor)
 });
 
 //prepare data in population details chart
@@ -228,12 +230,14 @@ const population = ((array) =>{
 
 	const bgColor = ['rgba(154, 153, 254, 1)', 'rgba(255, 206, 89, 1)'];
 
+	const borderColor = ['rgba(154, 153, 254, 1)', 'rgba(255, 206, 89, 1)'];
+
 	const labels = ['uninfected', 'infected'];
 
 	const elementId = 'population-chart';
 
 	//req. type, data{labels, datasets{ data, bg-color}}, 
-	generateChart(type, labels, dataArray, bgColor, elementId);
+	generateChart(type, labels, dataArray, bgColor, elementId, borderColor);
 })
 
 //prepare data in population details chart
@@ -243,18 +247,33 @@ const caseSummary = ((array) =>{
 
 	const type = 'doughnut';
 
-	const bgColor = ['rgba(255, 206, 86, 1)', 'rgba(0, 230, 118, 1)', 'rgba(255,99,132,1)'];
+	const bgColor = ['rgba(255, 206, 86, 1)', 'rgba(0, 230, 118, 1)', 'rgba(255,99,132, 1)'];
+
+	const borderColor = ['rgba(255, 206, 86, 1)', 'rgba(0, 230, 118, 1)', 'rgba(255,99,132, 1)'];
 
 	const labels = ['Active Case', 'Recovery', 'Deaths'];
 
 	const elementId = 'case-summary';
 
 	//req. type, data{labels, datasets{ data, bg-color}}, 
-	generateChart(type, labels, dataArray, bgColor, elementId);
+	generateChart(type, labels, dataArray, bgColor, elementId, borderColor);
+})
+
+//laberl color options
+const ligthModeLblColor = (()=>{
+    const labelColor = '#595959';
+
+    return labelColor
+});
+
+const darkModeLblColor = (()=>{
+    const labelColor = 'white';
+
+    return labelColor
 })
 
 //reusable chart function
-let generateChart = ((type, labels, data, bgColor, id)=>{
+let generateChart = ((type, labels, data, bgColor, id, borderColor)=>{
 		//chart config
 		//doughnut chart
 	let chart = document.getElementById(id);
@@ -266,10 +285,17 @@ let generateChart = ((type, labels, data, bgColor, id)=>{
 	            label: '# of data',
 	            data: data,
 	            backgroundColor: bgColor,
-	            borderWidth: 1
+	            borderColor: borderColor,
+	            borderWidth: 2,
 	        }]
 	    },
 	    options: {
+	    	legend: {
+       			position: 'top',
+        		labels: {
+          		fontColor: ligthModeLblColor()
+        		}
+      		},
 	        responsive: true, // Instruct chart js to respond nicely.
 	        maintainAspectRatio: true, // Add to prevent default behaviour of full-width/height
 	    }
@@ -669,6 +695,41 @@ const getTestAndCritical = ((data, country) =>{
 
 		// console.log(`${country} || Test Conducted: ${getTest} | Critical: ${getCritical}`);
 })
+//toogle option
+document.getElementById("darkmode-btn").addEventListener("click", function(){
+  // console.log('hello world');
+  const value = document.getElementById("darkmode-btn").value
+
+  // console.log(value);
+
+  if(value === 'off'){
+    //when darkmode off
+    document.getElementById("darkmode-btn").value = 'on';
+
+    const cards = document.getElementsByClassName('card');
+
+    for (let cardCount = 0; cardCount < cards.length; cardCount++) {
+    	// console.log(cards[cardCount]);
+    	cards[cardCount].classList.add('card-lht');
+    	cards[cardCount].classList.remove('card-drk');
+    };
+
+    console.log(value);
+  }else if(value === 'on'){
+    //when darkmode on
+    document.getElementById("darkmode-btn").value = 'off';
+
+    const cards = document.getElementsByClassName('card');
+
+    for (let cardCount = 0; cardCount < cards.length; cardCount++) {
+    	// console.log(cards[cardCount]);
+    	cards[cardCount].classList.remove('card-lht');
+    	cards[cardCount].classList.add('card-drk');
+    };
+
+    console.log(value);
+  }
+});
 
 
 

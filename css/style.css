@@ -130,6 +130,7 @@ input:checked + .slider:before {
 	--red: #FF6484;
 	--yellow: #FFCE59;
 	--white: #FFFFFF;
+  --black-bg: #272822;
 }
 html, body{
 	font-family: 'roboto';
@@ -143,9 +144,7 @@ html, body{
 	background-color: var(--blue);
 }
 .card-1, .card-2, .card-3, .card-4, .card-5{
-    background-color: white;
     border-radius: 20px;
-    box-shadow: 2px 2px 5px 2px var(--grey-d2);
 }
 .card-header{
 	margin: 5% 5% 0 5%;
@@ -278,7 +277,7 @@ header, .control, .sub-data-master-container{
 }
 .toogle-btn-container{
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
 }
 .update-time{
@@ -290,3 +289,22 @@ header, .control, .sub-data-master-container{
 .yellow{
 	background-color: var(--yellow);
 }
+
+
+/*light mode class list*/
+.card-lht{
+  background-color: white;
+  box-shadow: 2px 2px 5px 2px var(--grey-d2);
+  transition: 0.5s;
+  transition-delay: 0.5s;
+}
+
+/*dark mode class list*/
+.card-drk{
+    background-color: var(--black-bg);
+    border: solid var(--grey-d2);
+    border-width: 2px;
+    transition: 0.5s;
+    transition-delay: 0.5s;
+}
+
