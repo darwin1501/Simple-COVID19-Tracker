@@ -1,5 +1,5 @@
 
-
+//add ms to request url to force browser to get new request and avoid caching of data
 const miliSeconds = Date.now()
 
 //today's data case per country

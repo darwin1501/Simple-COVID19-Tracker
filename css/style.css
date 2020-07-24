@@ -1,3 +1,84 @@
+/*toogle button design*/
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+/*default slider bg color*/
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+/*when the slider(circle) at the left*/
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background: url(../img/svg/light_mode.svg) center center no-repeat;
+  background-repeat: no-repeat;
+  background-size: 70% 70%;
+  background-color: #999999;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+/*when the slider(circle) at the right*/
+input:checked + .slider {
+  background-color: #ccc;
+}
+
+/*when the slider(circle) at the right*/
+input:checked + .slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background: url(../img/svg/dark_mode.svg) center center no-repeat;
+  background-repeat: no-repeat;
+  background-size: 70% 70%;
+  background-color: #999999;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+
 /*loading animation START*/
 .lds-facebook {
   display: inline-block;
@@ -194,6 +275,11 @@ header, .control, .sub-data-master-container{
 .text-link{
 	color: var(--black);
 	cursor: pointer;
+}
+.toogle-btn-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .update-time{
 	margin-top: 0;
