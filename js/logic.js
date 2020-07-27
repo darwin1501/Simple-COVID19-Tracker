@@ -705,29 +705,54 @@ document.getElementById("darkmode-btn").addEventListener("click", function(){
   if(value === 'off'){
     //when darkmode off
     document.getElementById("darkmode-btn").value = 'on';
-
+    //card
     const cards = document.getElementsByClassName('card');
-
+    //html
+    const html = document.querySelector('html');
+    //body
+     const body = document.querySelector('body');
+    //loop all cards 
     for (let cardCount = 0; cardCount < cards.length; cardCount++) {
     	// console.log(cards[cardCount]);
     	cards[cardCount].classList.add('card-lht');
+
     	cards[cardCount].classList.remove('card-drk');
     };
+    html.classList.add('html-bg-lht');
 
-    console.log(value);
+    html.classList.remove('html-bg-drk');
+
+    body.classList.add('body-bg-lht');
+
+    body.classList.remove('body-bg-drk');
+
+    // console.log(value);
+
   }else if(value === 'on'){
     //when darkmode on
     document.getElementById("darkmode-btn").value = 'off';
-
+    //card
     const cards = document.getElementsByClassName('card');
-
+    //html
+    const html = document.querySelector('html');
+    //body
+     const body = document.querySelector('body');
+    //loop all cards 
     for (let cardCount = 0; cardCount < cards.length; cardCount++) {
     	// console.log(cards[cardCount]);
     	cards[cardCount].classList.remove('card-lht');
+
     	cards[cardCount].classList.add('card-drk');
     };
+    html.classList.add('html-bg-drk');
 
-    console.log(value);
+    html.classList.remove('html-bg-lht');
+
+    body.classList.add('body-bg-drk');
+
+    body.classList.remove('body-bg-lht');
+
+    // console.log(value);
   }
 });
 

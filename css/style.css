@@ -292,16 +292,27 @@ header, .control, .sub-data-master-container{
 
 
 /*light mode class list*/
+.html-bg-lht, .body-bg-lht{
+  background-color: var(--grey-l1);
+  transition: 0.5s;
+  transition-delay: 0.5s;
+}
 .card-lht{
   background-color: white;
   box-shadow: 2px 2px 5px 2px var(--grey-d2);
   transition: 0.5s;
   transition-delay: 0.5s;
+ /* transition-timing-function: ease-in;*/
 }
 
 /*dark mode class list*/
+.html-bg-drk, .body-bg-drk{
+  background-color: var(--black-bg) !important;
+  transition: 0.5s;
+  transition-delay: 0.5s;
+}
 .card-drk{
-    background-color: var(--black-bg);
+    background-color: var(--black-bg)!important;
     border: solid var(--grey-d2);
     border-width: 2px;
     transition: 0.5s;
