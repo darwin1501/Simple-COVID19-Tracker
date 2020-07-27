@@ -1,15 +1,28 @@
 
 //add ms to request url to force browser to get new request and avoid caching of data
-const miliSeconds = Date.now()
+// const miliSeconds = Date.now()
+
+// //today's data case per country
+// const covid19Data1 = `https://disease.sh/v3/covid-19/countries?yesterday=false&allowNull=false?rnd=${miliSeconds}`;
+// //yesterday's data case per country
+// const covid19Data2 = `https://disease.sh/v3/covid-19/countries?yesterday=true&allowNull=false?rnd=${miliSeconds}`;
+// //global data today
+// const covid19GlobalData1 = `https://disease.sh/v3/covid-19/all?yesterday=false&allowNull=false?rnd=${miliSeconds}`;
+// //global data yesterday
+// const covid19GlobalData2 = `https://disease.sh/v3/covid-19/all?yesterday=true&allowNull=false?rnd=${miliSeconds}`;
+
+
+// const miliSeconds = Date.now()
 
 //today's data case per country
-const covid19Data1 = `https://disease.sh/v3/covid-19/countries?yesterday=false&allowNull=false?rnd=${miliSeconds}`;
+const covid19Data1 = `https://disease.sh/v3/covid-19/countries?yesterday=false&allowNull=false`;
 //yesterday's data case per country
-const covid19Data2 = `https://disease.sh/v3/covid-19/countries?yesterday=true&allowNull=false?rnd=${miliSeconds}`;
+const covid19Data2 = `https://disease.sh/v3/covid-19/countries?yesterday=true&allowNull=false`;
 //global data today
-const covid19GlobalData1 = `https://disease.sh/v3/covid-19/all?yesterday=false&allowNull=false?rnd=${miliSeconds}`;
+const covid19GlobalData1 = `https://disease.sh/v3/covid-19/all?yesterday=false&allowNull=false`;
 //global data yesterday
-const covid19GlobalData2 = `https://disease.sh/v3/covid-19/all?yesterday=true&allowNull=false?rnd=${miliSeconds}`;
+const covid19GlobalData2 = `https://disease.sh/v3/covid-19/all?yesterday=true&allowNull=false`;
+
 
 const selection = document.getElementsByClassName('selection-container');
 
@@ -698,19 +711,41 @@ const getTestAndCritical = ((data, country) =>{
 //toogle option
 document.getElementById("darkmode-btn").addEventListener("click", function(){
   // console.log('hello world');
-  const value = document.getElementById("darkmode-btn").value
-
-  // console.log(value);
-
-  if(value === 'off'){
-    //when darkmode off
-    document.getElementById("darkmode-btn").value = 'on';
+    const value = document.getElementById("darkmode-btn").value
     //card
     const cards = document.getElementsByClassName('card');
     //html
     const html = document.querySelector('html');
     //body
-     const body = document.querySelector('body');
+    const body = document.querySelector('body');
+    //header
+    const headerTxt = document.getElementsByClassName('header-txt');
+
+    const subTxt = document.getElementsByClassName('sub-txt');
+
+    const txtLink = document.getElementsByClassName('txt-link');
+
+    const controlLbl = document.getElementsByClassName('control-lbl');
+
+    const selection = document.getElementById('selection');
+    //labels in chart
+    const chartLbl = document.getElementsByClassName('chart-lbl');
+
+    const footerTxt = document.querySelector('h3');
+
+    const footerBrd = document.querySelector('footer');
+
+    const divider = document.getElementsByClassName('divider');
+
+    const dividerSm = document.getElementsByClassName('divider-sm');
+
+    const footerBtn = document.getElementsByClassName('footer-btn');
+
+  // console.log(value);
+
+  if(value === 'off'){
+    //when darkmode off
+	document.getElementById("darkmode-btn").value = 'on';
     //loop all cards 
     for (let cardCount = 0; cardCount < cards.length; cardCount++) {
     	// console.log(cards[cardCount]);
@@ -718,6 +753,7 @@ document.getElementById("darkmode-btn").addEventListener("click", function(){
 
     	cards[cardCount].classList.remove('card-drk');
     };
+
     html.classList.add('html-bg-lht');
 
     html.classList.remove('html-bg-drk');
@@ -726,17 +762,64 @@ document.getElementById("darkmode-btn").addEventListener("click", function(){
 
     body.classList.remove('body-bg-drk');
 
+    headerTxt[0].classList.add('header-txt-lht');
+
+    headerTxt[0].classList.remove('header-txt-drk');
+
+    subTxt[0].classList.add('sub-txt-lht');
+
+    subTxt[0].classList.remove('sub-txt-drk');
+
+    txtLink[0].classList.add('txt-link-lht');
+
+    txtLink[0].classList.remove('txt-link-drk');
+
+    controlLbl[0].classList.add('control-lbl-lht');
+
+    controlLbl[0].classList.remove('control-lbl-drk');
+
+    selection.classList.add('selection-lht');
+
+    selection.classList.remove('selection-drk');
+
+    divider[0].classList.add('divider-lht');
+
+    divider[0].classList.remove('divider-drk');
+
+    footerBtn[0].classList.add('footer-btn-lht');
+
+    footerBtn[0].classList.remove('footer-btn-drk');
+
+    //loop all small divisions 
+    for (let dividerSmCount = 0; dividerSmCount < dividerSm.length; dividerSmCount++) {
+    	// console.log(cards[cardCount]);
+    	dividerSm[dividerSmCount].classList.remove('divider-sm-drk');
+
+    	dividerSm[dividerSmCount].classList.add('divider-sm-lht');
+    };
+
+    //loop all chart-lbl 
+    for (let lblCount = 0; lblCount < chartLbl.length; lblCount++) {
+    	// console.log(cards[cardCount]);
+    	chartLbl[lblCount].classList.add('chart-lbl-lht');
+
+    	chartLbl[lblCount].classList.remove('chart-lbl-drk');
+    };
+
+    footerTxt.classList.add('footer-txt-lht');
+
+    footerTxt.classList.remove('footer-txt-drk');
+
+    footerBrd.classList.add('footer-lht');
+
+    footerBrd.classList.remove('footer-drk');
+
     // console.log(value);
 
   }else if(value === 'on'){
     //when darkmode on
+
     document.getElementById("darkmode-btn").value = 'off';
-    //card
-    const cards = document.getElementsByClassName('card');
-    //html
-    const html = document.querySelector('html');
-    //body
-     const body = document.querySelector('body');
     //loop all cards 
     for (let cardCount = 0; cardCount < cards.length; cardCount++) {
     	// console.log(cards[cardCount]);
@@ -744,6 +827,7 @@ document.getElementById("darkmode-btn").addEventListener("click", function(){
 
     	cards[cardCount].classList.add('card-drk');
     };
+
     html.classList.add('html-bg-drk');
 
     html.classList.remove('html-bg-lht');
@@ -752,6 +836,56 @@ document.getElementById("darkmode-btn").addEventListener("click", function(){
 
     body.classList.remove('body-bg-lht');
 
+    headerTxt[0].classList.add('header-txt-drk');
+
+    headerTxt[0].classList.remove('header-txt-lht');
+
+    subTxt[0].classList.add('sub-txt-drk');
+
+    subTxt[0].classList.remove('sub-txt-lht');
+
+    txtLink[0].classList.add('txt-link-drk');
+
+    txtLink[0].classList.remove('txt-link-lht');
+
+    controlLbl[0].classList.add('control-lbl-drk');
+
+    controlLbl[0].classList.remove('control-lbl-lht');
+
+    selection.classList.add('selection-drk');
+
+    selection.classList.remove('selection-lht');
+
+    divider[0].classList.add('divider-drk');
+
+    divider[0].classList.remove('divider-lht');
+
+    footerBtn[0].classList.add('footer-btn-drk');
+
+    footerBtn[0].classList.remove('footer-btn-lht');
+
+    //loop all small divisions 
+    for (let dividerSmCount = 0; dividerSmCount < dividerSm.length; dividerSmCount++) {
+    	// console.log(cards[cardCount]);
+    	dividerSm[dividerSmCount].classList.remove('divider-sm-lht');
+
+    	dividerSm[dividerSmCount].classList.add('divider-sm-drk');
+    };
+	//loop all chart-lbl
+    for (let lblCount = 0; lblCount < chartLbl.length; lblCount++) {
+    	// console.log(cards[cardCount]);
+    	chartLbl[lblCount].classList.remove('chart-lbl-lht');
+
+    	chartLbl[lblCount].classList.add('chart-lbl-drk');
+    };
+
+    footerTxt.classList.add('footer-txt-drk');
+
+    footerTxt.classList.remove('footer-txt-lht');
+
+    footerBrd.classList.add('footer-drk');
+
+    footerBrd.classList.remove('footer-lht');
     // console.log(value);
   }
 });

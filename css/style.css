@@ -144,7 +144,7 @@ html, body{
 	background-color: var(--blue);
 }
 .card-1, .card-2, .card-3, .card-4, .card-5{
-    border-radius: 20px;
+  border-radius: 20px;
 }
 .card-header{
 	margin: 5% 5% 0 5%;
@@ -152,25 +152,26 @@ html, body{
 }
 footer{
 	border-top: solid var(--grey-d1);
-    border-width: 2px;
+  border-width: 2px;
 	display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 150px;
-    margin: 5% 0 0 0;    
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 150px;
+  margin: 5% 0 0 0;    
 }
 .footer-btn{
+  color: var(--black);
 	border: solid var(--black);
-    border-width: 1px;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 100px;
-    height: 50px;
-    margin-left: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  border-width: 1px;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100px;
+  height: 50px;
+  margin-left: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .footer-btn:hover{
      background-color: var(--black);
@@ -179,7 +180,7 @@ footer{
      color: var(--white);
  }
  .footer-btn-txt{
-     color: var(--blac);
+    /* color: var(--black);*/
      font-family: 'roboto';
  }
 .footer-content{
@@ -222,6 +223,7 @@ footer{
 .green-txt{
 	color: var(--green);
 }
+/*footer txt*/
  h3{
      color: var(--black);
      font-size: 1em;
@@ -271,7 +273,7 @@ header, .control, .sub-data-master-container{
   margin-left: 5%;
   margin-right: 5%;
 }
-.text-link{
+.txt-link{
 	color: var(--black);
 	cursor: pointer;
 }
@@ -304,6 +306,37 @@ header, .control, .sub-data-master-container{
   transition-delay: 0.5s;
  /* transition-timing-function: ease-in;*/
 }
+.chart-lbl-lht, .control-lbl-lht, .footer-txt-lht, .header-txt-lht, .sub-txt-lht, .txt-link-lht{
+  color: var(--black);
+  transition: 0.5s;
+  transition-delay: 0.5s;
+}
+.divider-lht, .divider-sm-lht{
+  background-color: var(--grey-d1);
+  transition: 0.5s;
+  transition-delay: 0.5s;
+}
+.footer-lht{
+  border-top: solid var(--grey-d1);
+  transition: 0.5s;
+  transition-delay: 0.5s;
+}
+.footer-btn-lht{
+  color: var(--black);
+  transition: 0.5s;
+  transition-delay: 0.5s;
+}
+.footer-btn-lht:hover{
+  background-color: var(--black);
+  box-shadow: 1px 1px 20px 2px var(--black-l1);
+  color: var(--white);
+}
+.selection-lht{
+  border: none;
+  box-shadow: 2px 2px 5px 2px var(--grey-d2);
+  transition: 0.5s;
+  transition-delay: 0.5s;
+}
 
 /*dark mode class list*/
 .html-bg-drk, .body-bg-drk{
@@ -312,10 +345,43 @@ header, .control, .sub-data-master-container{
   transition-delay: 0.5s;
 }
 .card-drk{
-    background-color: var(--black-bg)!important;
-    border: solid var(--grey-d2);
-    border-width: 2px;
-    transition: 0.5s;
-    transition-delay: 0.5s;
+  background-color: var(--black-bg) !important;
+  border: solid var(--black);
+  border-width: 2px;
+  transition: 0.5s;
+  transition-delay: 0.5s;
+}
+.chart-lbl-drk, .control-lbl-drk, .footer-txt-drk, .header-txt-drk, .sub-txt-drk, .txt-link-drk{
+  color: var(--black-l1) !important;
+  transition: 0.5s;
+  transition-delay: 0.5s;
+}
+.divider-drk, .divider-sm-drk{
+  background-color: var(--black);
+  transition: 0.5s;
+  transition-delay: 0.5s;
+}
+.footer-drk{
+  border-top: solid var(--black) !important;
+  transition: 0.5s;
+  transition-delay: 0.5s;
+}
+.footer-btn-drk{
+  color: var(--white) !important;
+  transition: 0.5s;
+  transition-delay: 0.5s;
+}
+.footer-btn-drk:hover{
+  color: var(--black) !important;
+  background-color: var(--white) !important;
+  box-shadow: none;
+}
+.selection-drk{
+  border: solid var(--black) 1px !important;
+  box-shadow: none;
+  color: var(--black-l1) !important;
+  background-color: var(--black-bg) !important;
+  transition: 0.5s;
+  transition-delay: 0.5s;
 }
 
