@@ -624,7 +624,7 @@ const getPopulationsAndInfected = ((data) =>{
 
 		}
 
-		populationTxt.innerHTML = `Total Population: ${populationFormated}`;
+		populationTxt.innerHTML = `<label class="label">Total Population:</label> ${populationFormated}`;
 
 		unInfectedTxt.innerHTML = `${safePopulationFormated} (${unInfectedPc}%)`;
 
@@ -662,7 +662,7 @@ const getOverallDetailedCase = ((data, country) =>{
 
 		// console.log(`${country} || Active: ${getActiveCase} | Recovered: ${getRecovered} | Deaths ${getDeaths}`);
 
-		totalCaseLbl.innerHTML = `Total Case: ${casesFormated}`;
+		totalCaseLbl.innerHTML = `<label class="label">Total Case:</label> ${casesFormated}`;
 
 		activeCaseLbl.innerHTML = activeCaseFormated;
 
@@ -702,9 +702,9 @@ const getTestAndCritical = ((data, country) =>{
 
 		const testConductedLbl = document.getElementById('test-conducted');
 
-		criticalLbl.innerHTML = `Critical: ${criticalFormated}`;
+		criticalLbl.innerHTML = `${criticalFormated}`;
 
-		testConductedLbl.innerHTML = `${getTestFormated}(${testPercentFormated}%) of the Total Population has been tested.`;
+		testConductedLbl.innerHTML = `${getTestFormated}(${testPercentFormated}%)`;
 
 		// console.log(`${country} || Test Conducted: ${getTest} | Critical: ${getCritical}`);
 })
@@ -740,6 +740,13 @@ document.getElementById("darkmode-btn").addEventListener("click", function(){
     const dividerSm = document.getElementsByClassName('divider-sm');
 
     const footerBtn = document.getElementsByClassName('footer-btn');
+
+    const subDataLbl = document.getElementsByClassName('sub-data-lbl');
+
+    const dataTxt = document.getElementsByClassName('data-txt');
+
+    const label = document.getElementsByClassName('label');
+
 
   // console.log(value);
 
@@ -789,13 +796,32 @@ document.getElementById("darkmode-btn").addEventListener("click", function(){
     footerBtn[0].classList.add('footer-btn-lht');
 
     footerBtn[0].classList.remove('footer-btn-drk');
+    //loop all small label
+    for (let smallLblCount = 0; smallLblCount < label.length; smallLblCount++) {
+    	    label[smallLblCount].classList.add('label-lht');
 
+   			label[smallLblCount].classList.remove('label-drk');
+    };
+    //loop all data-txt 
+    for (let dataTxtCount = 0; dataTxtCount < dataTxt.length; dataTxtCount++) {
+    	// console.log(cards[cardCount]);
+    	dataTxt[dataTxtCount].classList.remove('data-txt-drk');
+
+    	dataTxt[dataTxtCount].classList.add('data-txt-lht');
+    };
     //loop all small divisions 
     for (let dividerSmCount = 0; dividerSmCount < dividerSm.length; dividerSmCount++) {
     	// console.log(cards[cardCount]);
     	dividerSm[dividerSmCount].classList.remove('divider-sm-drk');
 
     	dividerSm[dividerSmCount].classList.add('divider-sm-lht');
+    };
+    //loop all sub label
+    for (let subLblCount = 0; subLblCount < subDataLbl.length; subLblCount++) {
+    	// console.log(cards[cardCount]);
+    	subDataLbl[subLblCount].classList.add('subdata-lbl-lht');
+
+    	subDataLbl[subLblCount].classList.remove('subdata-lbl-drk');
     };
 
     //loop all chart-lbl 
@@ -863,7 +889,26 @@ document.getElementById("darkmode-btn").addEventListener("click", function(){
     footerBtn[0].classList.add('footer-btn-drk');
 
     footerBtn[0].classList.remove('footer-btn-lht');
+    //loop all small label
+    for (let smallLblCount = 0; smallLblCount < label.length; smallLblCount++) {
+    	    label[smallLblCount].classList.add('label-drk');
 
+   			label[smallLblCount].classList.remove('label-lht');
+    };
+    //loop all data-txt 
+    for (let dataTxtCount = 0; dataTxtCount < dataTxt.length; dataTxtCount++) {
+    	// console.log(cards[cardCount]);
+    	dataTxt[dataTxtCount].classList.remove('data-txt-lht');
+
+    	dataTxt[dataTxtCount].classList.add('data-txt-drk');
+    };
+    //loop all sub label
+    for (let subLblCount = 0; subLblCount < subDataLbl.length; subLblCount++) {
+    	// console.log(cards[cardCount]);
+    	subDataLbl[subLblCount].classList.add('subdata-lbl-drk');
+
+    	subDataLbl[subLblCount].classList.remove('subdata-lbl-lht');
+    };
     //loop all small divisions 
     for (let dividerSmCount = 0; dividerSmCount < dividerSm.length; dividerSmCount++) {
     	// console.log(cards[cardCount]);
