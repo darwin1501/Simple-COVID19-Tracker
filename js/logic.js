@@ -1,28 +1,169 @@
 
-//add ms to request url to force browser to get new request and avoid caching of data
-// const miliSeconds = Date.now()
+
+
+//check theme
+const themeChecker = (()=>{
+
+if(localStorage.getItem('darkmode') === 'on'){
+
+	const value = document.getElementById("darkmode-btn").value
+    //card
+    const cards = document.getElementsByClassName('card');
+    //html
+    const html = document.querySelector('html');
+    //body
+    const body = document.querySelector('body');
+    //header
+    const headerTxt = document.getElementsByClassName('header-txt');
+
+    const subTxt = document.getElementsByClassName('sub-txt');
+
+    const txtLink = document.getElementsByClassName('txt-link');
+
+    const controlLbl = document.getElementsByClassName('control-lbl');
+
+    const selection = document.getElementById('selection');
+    //labels in chart
+    const chartLbl = document.getElementsByClassName('chart-lbl');
+
+    const footerTxt = document.querySelector('h3');
+
+    const footerBrd = document.querySelector('footer');
+
+    const divider = document.getElementsByClassName('divider');
+
+    const dividerSm = document.getElementsByClassName('divider-sm');
+
+    const footerBtn = document.getElementsByClassName('footer-btn');
+
+    const subDataLbl = document.getElementsByClassName('sub-data-lbl');
+
+    const dataTxt = document.getElementsByClassName('data-txt');
+
+    const label = document.getElementsByClassName('label');
+
+	document.getElementById("darkmode-btn").click();
+
+	localStorage.setItem('darkmode', 'on');
+
+    // console.log(`darkmode ${localStorage.getItem('darkmode')}`);
+
+    document.getElementById("darkmode-btn").value = 'off';
+    //loop all cards 
+    for (let cardCount = 0; cardCount < cards.length; cardCount++) {
+    	// console.log(cards[cardCount]);
+    	cards[cardCount].classList.remove('card-lht');
+
+    	cards[cardCount].classList.add('card-drk');
+    };
+
+    html.classList.add('html-bg-drk');
+
+    html.classList.remove('html-bg-lht');
+
+    body.classList.add('body-bg-drk');
+
+    body.classList.remove('body-bg-lht');
+
+    headerTxt[0].classList.add('header-txt-drk');
+
+    headerTxt[0].classList.remove('header-txt-lht');
+
+    subTxt[0].classList.add('sub-txt-drk');
+
+    subTxt[0].classList.remove('sub-txt-lht');
+
+    txtLink[0].classList.add('txt-link-drk');
+
+    txtLink[0].classList.remove('txt-link-lht');
+
+    controlLbl[0].classList.add('control-lbl-drk');
+
+    controlLbl[0].classList.remove('control-lbl-lht');
+
+    selection.classList.add('selection-drk');
+
+    selection.classList.remove('selection-lht');
+
+    divider[0].classList.add('divider-drk');
+
+    divider[0].classList.remove('divider-lht');
+
+    footerBtn[0].classList.add('footer-btn-drk');
+
+    footerBtn[0].classList.remove('footer-btn-lht');
+    //loop all small label
+    for (let smallLblCount = 0; smallLblCount < label.length; smallLblCount++) {
+    	    label[smallLblCount].classList.add('label-drk');
+
+   			label[smallLblCount].classList.remove('label-lht');
+    };
+    //loop all data-txt 
+    for (let dataTxtCount = 0; dataTxtCount < dataTxt.length; dataTxtCount++) {
+    	// console.log(cards[cardCount]);
+    	dataTxt[dataTxtCount].classList.remove('data-txt-lht');
+
+    	dataTxt[dataTxtCount].classList.add('data-txt-drk');
+    };
+    //loop all sub label
+    for (let subLblCount = 0; subLblCount < subDataLbl.length; subLblCount++) {
+    	// console.log(cards[cardCount]);
+    	subDataLbl[subLblCount].classList.add('subdata-lbl-drk');
+
+    	subDataLbl[subLblCount].classList.remove('subdata-lbl-lht');
+    };
+    //loop all small divisions 
+    for (let dividerSmCount = 0; dividerSmCount < dividerSm.length; dividerSmCount++) {
+    	// console.log(cards[cardCount]);
+    	dividerSm[dividerSmCount].classList.remove('divider-sm-lht');
+
+    	dividerSm[dividerSmCount].classList.add('divider-sm-drk');
+    };
+	//loop all chart-lbl
+    for (let lblCount = 0; lblCount < chartLbl.length; lblCount++) {
+    	// console.log(cards[cardCount]);
+    	chartLbl[lblCount].classList.remove('chart-lbl-lht');
+
+    	chartLbl[lblCount].classList.add('chart-lbl-drk');
+    };
+
+    footerTxt.classList.add('footer-txt-drk');
+
+    footerTxt.classList.remove('footer-txt-lht');
+
+    footerBrd.classList.add('footer-drk');
+
+    footerBrd.classList.remove('footer-lht');
+
+	}
+})
+
+const body = document.querySelector('body');
+
+body.addEventListener("load", themeChecker());
+
+// add ms to request url to force browser to get new request and avoid caching of data
+const miliSeconds = Date.now()
+//get API request
+//today's data case per country
+const covid19Data1 = `https://disease.sh/v3/covid-19/countries?yesterday=false&allowNull=false?rnd=${miliSeconds}`;
+//yesterday's data case per country
+const covid19Data2 = `https://disease.sh/v3/covid-19/countries?yesterday=true&allowNull=false?rnd=${miliSeconds}`;
+//global data today
+const covid19GlobalData1 = `https://disease.sh/v3/covid-19/all?yesterday=false&allowNull=false?rnd=${miliSeconds}`;
+//global data yesterday
+const covid19GlobalData2 = `https://disease.sh/v3/covid-19/all?yesterday=true&allowNull=false?rnd=${miliSeconds}`;
+
+//for testing purposes
 
 // //today's data case per country
-// const covid19Data1 = `https://disease.sh/v3/covid-19/countries?yesterday=false&allowNull=false?rnd=${miliSeconds}`;
+// const covid19Data1 = `https://disease.sh/v3/covid-19/countries?yesterday=false&allowNull=false`;
 // //yesterday's data case per country
-// const covid19Data2 = `https://disease.sh/v3/covid-19/countries?yesterday=true&allowNull=false?rnd=${miliSeconds}`;
+// const covid19Data2 = `https://disease.sh/v3/covid-19/countries?yesterday=true&allowNull=false`;
 // //global data today
-// const covid19GlobalData1 = `https://disease.sh/v3/covid-19/all?yesterday=false&allowNull=false?rnd=${miliSeconds}`;
+// const covid19GlobalData1 = `https://disease.sh/v3/covid-19/all?yesterday=false&allowNull=false`;
 // //global data yesterday
-// const covid19GlobalData2 = `https://disease.sh/v3/covid-19/all?yesterday=true&allowNull=false?rnd=${miliSeconds}`;
-
-
-// const miliSeconds = Date.now()
-
-//today's data case per country
-const covid19Data1 = `https://disease.sh/v3/covid-19/countries?yesterday=false&allowNull=false`;
-//yesterday's data case per country
-const covid19Data2 = `https://disease.sh/v3/covid-19/countries?yesterday=true&allowNull=false`;
-//global data today
-const covid19GlobalData1 = `https://disease.sh/v3/covid-19/all?yesterday=false&allowNull=false`;
-//global data yesterday
-const covid19GlobalData2 = `https://disease.sh/v3/covid-19/all?yesterday=true&allowNull=false`;
-
+// const covid19GlobalData2 = `https://disease.sh/v3/covid-19/all?yesterday=true&allowNull=false`;
 
 const selection = document.getElementsByClassName('selection-container');
 
@@ -82,9 +223,6 @@ async function getData(){
     let globalNewData = await globalTodayData.json();
 
     let globalOldData =  await globalYesterdayData.json();
-
-    //clear local storage of browser
-    localStorage.clear();
     //clear session storage
     sessionStorage.clear();
     //store in session
@@ -306,7 +444,9 @@ let generateChart = ((type, labels, data, bgColor, id, borderColor)=>{
 	    	legend: {
        			position: 'top',
         		labels: {
-          		fontColor: ligthModeLblColor()
+          		fontColor: ligthModeLblColor(),
+          		fontFamily: '"Courier New", Courier, monospace',
+          		// fontSize: '12',
         		}
       		},
 	        responsive: true, // Instruct chart js to respond nicely.
@@ -624,7 +764,7 @@ const getPopulationsAndInfected = ((data) =>{
 
 		}
 
-		populationTxt.innerHTML = `<label class="label">Total Population:</label> ${populationFormated}`;
+		populationTxt.innerHTML = `${populationFormated}`;
 
 		unInfectedTxt.innerHTML = `${safePopulationFormated} (${unInfectedPc}%)`;
 
@@ -662,7 +802,7 @@ const getOverallDetailedCase = ((data, country) =>{
 
 		// console.log(`${country} || Active: ${getActiveCase} | Recovered: ${getRecovered} | Deaths ${getDeaths}`);
 
-		totalCaseLbl.innerHTML = `<label class="label">Total Case:</label> ${casesFormated}`;
+		totalCaseLbl.innerHTML = `${casesFormated}`;
 
 		activeCaseLbl.innerHTML = activeCaseFormated;
 
@@ -752,6 +892,10 @@ document.getElementById("darkmode-btn").addEventListener("click", function(){
 
   if(value === 'off'){
     //when darkmode off
+    localStorage.setItem('darkmode', 'off');
+
+    console.log(`darkmode ${localStorage.getItem('darkmode')}`);
+
 	document.getElementById("darkmode-btn").value = 'on';
     //loop all cards 
     for (let cardCount = 0; cardCount < cards.length; cardCount++) {
@@ -844,6 +988,9 @@ document.getElementById("darkmode-btn").addEventListener("click", function(){
 
   }else if(value === 'on'){
     //when darkmode on
+    localStorage.setItem('darkmode', 'on');
+
+    console.log(`darkmode ${localStorage.getItem('darkmode')}`);
 
     document.getElementById("darkmode-btn").value = 'off';
     //loop all cards 

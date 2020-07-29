@@ -134,7 +134,7 @@ input:checked + .slider:before {
   --black-bg: #272822;
 }
 html, body{
-	font-family: 'roboto';
+	font-family: "Courier New", Courier, monospace;
 	background-color: var(--grey-l1);
 }
 .box-container{
@@ -197,6 +197,9 @@ footer{
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
+}
+.data-lbl{
+  padding-top: 1.4px;
 }
 .data-lbl, .data-txt, .sub-data-lbl{
 	color: var(--black);
@@ -280,6 +283,12 @@ label{
 .sub-data-container{
   margin-left: 5%;
   margin-right: 5%;
+}
+.sub-mid-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: -4%;
 }
 .txt-link{
 	color: var(--black);

@@ -31,8 +31,11 @@
 		margin: 0 5px 0 5px;
 		font-size: 10px;
 	}
-	.doughnut-chart-container, .pie-chart-container{
+	.doughnut-chart-container{
 		padding-bottom: 5%;
+	}
+	.pie-chart-container{
+		padding-bottom: 4%;
 	}
 	.sub-txt{
 		font-size: 12px;
@@ -79,7 +82,10 @@
 @media screen and (min-width: 750px){
 	.control{
 		margin-left: auto;
-		margin-top: auto;
+		margin-top: 2%;
+	}
+	.control-lbl{
+		margin-top: 3%;
 	}
 	.divider{
 		margin: 2% auto;
@@ -108,7 +114,7 @@
         grid-gap: 10px;
     }
     .card-1 > .card-content > .doughnut-chart-container{
-    	padding-bottom: 36px;
+    	padding-bottom: 9.3%;
     }
 	.divider{
 		margin: 0 0 2% 0;
@@ -138,6 +144,12 @@
 	}
 }
 @media screen and (min-width: 1300px){
+	.card-1 > .card-content > .doughnut-chart-container{
+    	padding-bottom: 9.8%;
+    }
+	.data-txt{
+		font-size: 14px;
+	}
 	.dashboard-container {
 		width: 1200px;
     }
