@@ -16,7 +16,7 @@
     options: {
         responsive: true, // Instruct chart js to respond nicely.
         maintainAspectRatio: true,
-        cutoutPercentage: 50 // Add to prevent default behaviour of full-width/height 
+        cutoutPercentage: 50 
     }
 });
 
@@ -35,6 +35,7 @@
     options: {
         responsive: true, // Instruct chart js to respond nicely.
         maintainAspectRatio: true,
+        cutoutPercentage: 0 
     }
 });
 
