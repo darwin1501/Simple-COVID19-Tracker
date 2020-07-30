@@ -259,6 +259,11 @@ header, .control, .sub-data-master-container{
 label{
   color: var(--grey-d0);
 }
+.is-loading{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .red{
 	background-color: var(--red);
 }

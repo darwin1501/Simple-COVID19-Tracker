@@ -1,5 +1,71 @@
+ 
+//global charts
 
+ var doughnutOne = document.getElementById('case-today-chart');
+ var doughnutOneConfig = new Chart(doughnutOne, {
+    type: 'doughnut',
+    data: {
+        labels: ['data-1', 'data-2', 'data-3'],
+        datasets: [{
+            label: '# of data',
+            data: [0, 0, 0],
+            backgroundColor: ['rgba(0, 230, 118, 1)', 'rgba(255, 206, 86, 1)', 'rgba(255,99,132,1)'],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true, // Instruct chart js to respond nicely.
+        maintainAspectRatio: true,
+        cutoutPercentage: 50 // Add to prevent default behaviour of full-width/height 
+    }
+});
 
+ var pie = document.getElementById('population-chart');
+ var pieConfig = new Chart(pie, {
+    type: 'pie',
+    data: {
+        labels: ['data-1', 'data-2'],
+        datasets: [{
+            label: '# of data',
+            data: [0, 0],
+            backgroundColor: ['rgba(154, 153, 254, 1)', 'rgba(255, 206, 89, 1)'],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true, // Instruct chart js to respond nicely.
+        maintainAspectRatio: true,
+    }
+});
+
+ var doughnutTwo = document.getElementById('case-summary');
+ var doughnutTwoConfig = new Chart(doughnutTwo, {
+    type: 'doughnut',
+    data: {
+        labels: ['data-1', 'data-2', 'data-3'],
+        datasets: [{
+            label: '# of data',
+            data: [0, 0, 0],
+            backgroundColor: ['rgba(0, 230, 118, 1)', 'rgba(255, 206, 86, 1)', 'rgba(255,99,132,1)'],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true, // Instruct chart js to respond nicely.
+        maintainAspectRatio: true,
+        cutoutPercentage: 50 // Add to prevent default behaviour of full-width/height 
+    }
+});
+
+var doughnutContainer = document.getElementsByClassName('doughnut-chart-container');
+
+var pieContainer = document.getElementsByClassName('pie-chart-container');
+//hide all chart while waiting the data
+doughnutContainer[0].classList.add('hidden');
+
+doughnutContainer[1].classList.add('hidden');
+
+pieContainer[0].classList.add('hidden');
 
 //check theme
 const themeChecker = (()=>{
@@ -142,7 +208,7 @@ const body = document.querySelector('body');
 
 body.addEventListener("load", themeChecker());
 
-// add ms to request url to force browser to get new request and avoid caching of data
+// add ms to request url to force browser to get new request and to avoid caching of data
 const miliSeconds = Date.now()
 //get API request
 //today's data case per country
@@ -165,24 +231,19 @@ const covid19GlobalData2 = `https://disease.sh/v3/covid-19/all?yesterday=true&al
 // //global data yesterday
 // const covid19GlobalData2 = `https://disease.sh/v3/covid-19/all?yesterday=true&allowNull=false`;
 
-const selection = document.getElementsByClassName('selection-container');
-
-const todayChart = document.getElementById('case-today-chart');
-
-const populationChart = document.getElementById('population-chart');
-
-const caseSummaryChart = document.getElementById('case-summary');
 
 const subDataContainer = document.getElementsByClassName('sub-data-container');
 
-//hide all elements that is not ready
-selection[0].classList.add("hidden");
+const loading = document.getElementsByClassName('loading');
 
-todayChart.classList.add("hidden");
+    //show all loading the loading animation
+	for (let element = 0; element < loading.length; element++) {
 
-populationChart.classList.add("hidden");
+		loading[element].classList.add('is-loading');
 
-caseSummaryChart.classList.add("hidden");
+	};
+
+//hide all elements while processing the data
 
 for (let element = 0; element < subDataContainer.length; element++) {
 
@@ -212,8 +273,6 @@ async function getData(){
 
     let globalYesterdayData = await fetch(covid19GlobalData2);
 
-    // let responseArray = [todaysData, yesterdaysData]
-
   if((todaysData.ok && yesterdaysData.ok) && (globalTodayData.ok && globalYesterdayData.ok)){
 
   	let newData = await todaysData.json() 
@@ -242,8 +301,12 @@ async function getData(){
 
 	caseSummaryChart.classList.remove("hidden");
 
-	//hide all loading element
+
+
+	//hide all loading animation
 	for (let element = 0; element < loading.length; element++) {
+
+		loading[element].classList.remove('is-loading');
 
 		loading[element].classList.add('hidden');
 
@@ -337,7 +400,6 @@ const getDetailedCase = ((newData, oldData, globalNewData, globalOldData) => {
 
 		const summaryOfCase = getOverallDetailedCase(todaysData, selectedCountry); 
 
-		//set id for two different doughnut chart
 
 		getTestAndCritical(todaysData, selectedCountry);
 		//predare data in charts
@@ -369,7 +431,10 @@ const caseToday = ((data1, data2, data3,)=>{
 
 	const elementId = 'case-today-chart';		
 	//req. type, data{labels, datasets{ data, bg-color}}, 
-	generateChart(type, labels, dataArray, bgColor, elementId, borderColor)
+	//destroy chart
+	doughnutContainer[0].classList.remove('hidden');
+
+	doughnutOneChart(type, labels, dataArray, bgColor, elementId, borderColor)
 });
 
 //prepare data in population details chart
@@ -388,7 +453,10 @@ const population = ((array) =>{
 	const elementId = 'population-chart';
 
 	//req. type, data{labels, datasets{ data, bg-color}}, 
-	generateChart(type, labels, dataArray, bgColor, elementId, borderColor);
+
+	pieContainer[0].classList.remove('hidden');
+
+	pieChart(type, labels, dataArray, bgColor, elementId, borderColor);
 })
 
 //prepare data in population details chart
@@ -406,8 +474,11 @@ const caseSummary = ((array) =>{
 
 	const elementId = 'case-summary';
 
-	//req. type, data{labels, datasets{ data, bg-color}}, 
-	generateChart(type, labels, dataArray, bgColor, elementId, borderColor);
+	//req. type, data{labels, datasets{ data, bg-color}},
+
+	doughnutContainer[1].classList.remove('hidden');
+
+	doughnutTwoChart(type, labels, dataArray, bgColor, elementId, borderColor);
 })
 
 //laberl color options
@@ -424,11 +495,14 @@ const darkModeLblColor = (()=>{
 })
 
 //reusable chart function
-let generateChart = ((type, labels, data, bgColor, id, borderColor)=>{
+let doughnutOneChart = ((type, labels, data, bgColor, id, borderColor)=>{
 		//chart config
 		//doughnut chart
-	let chart = document.getElementById(id);
-	let chartConfig = new Chart(chart, {
+	doughnutOneConfig.destroy();
+
+	 // chart = document.getElementById(id);
+	//destroy chart
+	  doughnutOneConfig = new Chart(doughnutOne, {
 	    type: type,
 	    data: {
 	        labels: labels,
@@ -454,10 +528,80 @@ let generateChart = ((type, labels, data, bgColor, id, borderColor)=>{
 	    }
 	});
 	//update chart
-	chartConfig.update();
-		
+	doughnutOneConfig.update();
 });
 
+let pieChart = ((type, labels, data, bgColor, id, borderColor)=>{
+		//chart config
+		//doughnut chart
+	pieConfig.destroy();
+
+	 // chart = document.getElementById(id);
+	//destroy chart
+	  pieConfig = new Chart(pie, {
+	    type: type,
+	    data: {
+	        labels: labels,
+	        datasets: [{
+	            label: '# of data',
+	            data: data,
+	            backgroundColor: bgColor,
+	            borderColor: borderColor,
+	            borderWidth: 2,
+	        }]
+	    },
+	    options: {
+	    	legend: {
+       			position: 'top',
+        		labels: {
+          		fontColor: ligthModeLblColor(),
+          		fontFamily: '"Courier New", Courier, monospace',
+          		// fontSize: '12',
+        		}
+      		},
+	        responsive: true, // Instruct chart js to respond nicely.
+	        maintainAspectRatio: true, // Add to prevent default behaviour of full-width/height
+	    }
+	});
+	//update chart
+	pieConfig.update();	
+});
+
+let doughnutTwoChart = ((type, labels, data, bgColor, id, borderColor)=>{
+		//chart config
+		//doughnut chart
+	doughnutTwoConfig.destroy();
+
+	 // chart = document.getElementById(id);
+	//destroy chart
+	  doughnutTwoConfig = new Chart(doughnutTwo, {
+	    type: type,
+	    data: {
+	        labels: labels,
+	        datasets: [{
+	            label: '# of data',
+	            data: data,
+	            backgroundColor: bgColor,
+	            borderColor: borderColor,
+	            borderWidth: 2,
+	        }]
+	    },
+	    options: {
+	    	legend: {
+       			position: 'top',
+        		labels: {
+          		fontColor: ligthModeLblColor(),
+          		fontFamily: '"Courier New", Courier, monospace',
+          		// fontSize: '12',
+        		}
+      		},
+	        responsive: true, // Instruct chart js to respond nicely.
+	        maintainAspectRatio: true, // Add to prevent default behaviour of full-width/height
+	    }
+	});
+	//update chart
+	doughnutTwoConfig.update();
+});
 const getPercentages = ((today, yesterday, dataText, country, lblId) =>{
 
 		//get active case and its percentage 
@@ -644,7 +788,6 @@ const todaysActiveCase = ((today, yesterday, country) =>{
 
 		return todayCases;	
 });
-
 
 const getTodaysRecoveries = ((today, yesterday, country) =>{
 
