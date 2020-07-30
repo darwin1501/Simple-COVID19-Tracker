@@ -27,7 +27,7 @@
 	.data-header{
 		padding-bottom: 10px;
 	}
-	.data-lbl, .data-txt, .green-txt, .red-txt{
+	h4, .data-lbl, .data-txt, .green-txt, .red-txt{
 		margin: 0 5px 0 5px;
 		font-size: 10px;
 	}
@@ -54,7 +54,7 @@
 	}
 }
 @media screen and (min-width: 380px){
-	.data-lbl, .data-txt, .green-txt, .red-txt{
+	h4, .data-lbl, .data-txt, .green-txt, .red-txt{
 		font-size: 12px;
 	}
 }
