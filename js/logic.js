@@ -144,6 +144,10 @@ if(localStorage.getItem('darkmode') === 'on'){
 
     txtLink[0].classList.remove('txt-link-lht');
 
+    txtLink[1].classList.add('txt-link-drk');
+
+    txtLink[1].classList.remove('txt-link-lht');
+
     controlLbl[0].classList.add('control-lbl-drk');
 
     controlLbl[0].classList.remove('control-lbl-lht');
@@ -212,6 +216,7 @@ body.addEventListener("load", themeChecker());
 // add ms to request url to force browser to get new request and to avoid caching of data
 const miliSeconds = Date.now()
 //get API request
+var cors_api_url = 'https://cors-anywhere.herokuapp.com/';
 //today's data case per country
 const covid19Data1 = `https://disease.sh/v3/covid-19/countries?yesterday=false&allowNull=false?rnd=${miliSeconds}`;
 //yesterday's data case per country
@@ -245,95 +250,196 @@ const loading = document.getElementsByClassName('loading');
 	};
 
 //hide all elements while processing the data
-
 for (let element = 0; element < subDataContainer.length; element++) {
 
 		subDataContainer[element].classList.add('hidden');
 
 	};
 
-async function getData(){
+//process all API request
+    async function doCORSRequest(options) {
 
-	const loading = document.getElementsByClassName('loading');
+    //get all elements that needs to hide and show
+    const loading = document.getElementsByClassName('loading');
 
-	const selection = document.getElementsByClassName('selection-container');
+    const selection = document.getElementsByClassName('selection-container');
 
-	const todayChart = document.getElementById('case-today-chart');
+    const todayChart = document.getElementById('case-today-chart');
 
-	const populationChart = document.getElementById('population-chart');
+    const populationChart = document.getElementById('population-chart');
 
-	const caseSummaryChart = document.getElementById('case-summary');
+    const caseSummaryChart = document.getElementById('case-summary');
 
-	const subDataContainer = document.getElementsByClassName('sub-data-container');
+    const subDataContainer = document.getElementsByClassName('sub-data-container');    
 
-    let todaysData = await fetch(covid19Data1);
+    //get all url
+    const newCountryCase = await options.url;
 
-    let yesterdaysData = await fetch(covid19Data2);
+    const oldCountryCase = await options.url2;
 
-    let globalTodayData = await fetch(covid19GlobalData1);
+    const newGlobalCase = await options.url3;
 
-    let globalYesterdayData = await fetch(covid19GlobalData2);
+    const oldGlobalCase = await options.url4;
 
-  if((todaysData.ok && yesterdaysData.ok) && (globalTodayData.ok && globalYesterdayData.ok)){
+    //get CORS api
+    const CORS = await cors_api_url;
 
-  	let newData = await todaysData.json() 
+    //set new request
+    let newCountryReq = new XMLHttpRequest();
 
-    let oldData = await yesterdaysData.json();
+    let oldCountryReq = new XMLHttpRequest();
 
-    let globalNewData = await globalTodayData.json();
+    let newGlobalReq = new XMLHttpRequest();
 
-    let globalOldData =  await globalYesterdayData.json();
-    //clear session storage
-    sessionStorage.clear();
-    //store in session
-    sessionStorage.newData = JSON.stringify(newData);
+    let oldGlobalReq = new XMLHttpRequest();
 
-    sessionStorage.oldData = JSON.stringify(oldData);
+    //process URL with CORS
+    newCountryReq.open(options.method, CORS + newCountryCase);
+    newCountryReq.onload = newCountryReq.onerror = function() {
+    //set to session
+    sessionStorage.newData = newCountryReq.responseText;
+    };
+    newCountryReq.send(options.data);
+    //process URL with CORS
+    oldCountryReq.open(options.method, CORS + oldCountryCase);
+    oldCountryReq.onload = oldCountryReq.onerror = function() {
+    //se to session
+    sessionStorage.oldData = oldCountryReq.responseText;
+    };
+    oldCountryReq.send(options.data);
+    //process URL with CORS
+    newGlobalReq.open(options.method, CORS + newGlobalCase);
+    newGlobalReq.onload = newGlobalReq.onerror = function() {
+    //se to session
+    sessionStorage.globalNewData = newGlobalReq.responseText;
+    };
+    newGlobalReq.send(options.data);
+    //process URL with CORS
+    oldGlobalReq.open(options.method, CORS + oldGlobalCase);
+    oldGlobalReq.onload = oldGlobalReq.onerror = function() {
+    //se to session
+    sessionStorage.globalOldData = oldGlobalReq.responseText;
 
-    sessionStorage.globalNewData = JSON.stringify(globalNewData);
-
-    sessionStorage.globalOldData = JSON.stringify(globalOldData);
-
+    // show elements
     selection[0].classList.remove('hidden');
 
     todayChart.classList.remove("hidden");
 
-	populationChart.classList.remove("hidden");
+    populationChart.classList.remove("hidden");
 
-	caseSummaryChart.classList.remove("hidden");
+    caseSummaryChart.classList.remove("hidden");
 
+        //hide all loading animation
+        for (let element = 0; element < loading.length; element++) {
 
+            loading[element].classList.remove('is-loading');
 
-	//hide all loading animation
-	for (let element = 0; element < loading.length; element++) {
+            loading[element].classList.add('hidden');
+        };
 
-		loading[element].classList.remove('is-loading');
+        for (let element = 0; element < subDataContainer.length; element++) {
 
-		loading[element].classList.add('hidden');
+            subDataContainer[element].classList.remove('hidden');
+        };
 
-	};
+    generateOption(sessionStorage.newData);
 
-	for (let element = 0; element < subDataContainer.length; element++) {
+    distributeData();
+    };
 
-		subDataContainer[element].classList.remove('hidden');
-
-	};
-
-	generateOption(newData);
-
-	distributeData();
-
-  }else{
-
-    // console.log("HTTP-Error: " + response.status);
-
+    oldGlobalReq.send(options.data);
   }
 
-  // return responseArray;
+    doCORSRequest({
+        method: 'GET',
+        url: covid19Data1,
+        url2: covid19Data2,
+        url3: covid19GlobalData1,
+        url4: covid19GlobalData2,
+      });
 
-}
+// async function getData(){
 
-getData();
+// 	const loading = document.getElementsByClassName('loading');
+
+// 	const selection = document.getElementsByClassName('selection-container');
+
+// 	const todayChart = document.getElementById('case-today-chart');
+
+// 	const populationChart = document.getElementById('population-chart');
+
+// 	const caseSummaryChart = document.getElementById('case-summary');
+
+// 	const subDataContainer = document.getElementsByClassName('sub-data-container');
+
+//     let todaysData = await fetch(covid19Data1);
+
+//     let yesterdaysData = await fetch(covid19Data2);
+
+//     let globalTodayData = await fetch(covid19GlobalData1);
+
+//     let globalYesterdayData = await fetch(covid19GlobalData2);
+
+//   if((todaysData.ok && yesterdaysData.ok) && (globalTodayData.ok && globalYesterdayData.ok)){
+
+//   	let newData = await todaysData.json() 
+
+//     let oldData = await yesterdaysData.json();
+
+//     let globalNewData = await globalTodayData.json();
+
+//     let globalOldData =  await globalYesterdayData.json();
+//     //clear session storage
+//     sessionStorage.clear();
+//     //store in session
+//     sessionStorage.newData = JSON.stringify(newData);
+
+//     sessionStorage.oldData = JSON.stringify(oldData);
+
+//     sessionStorage.globalNewData = JSON.stringify(globalNewData);
+
+//     sessionStorage.globalOldData = JSON.stringify(globalOldData);
+
+//     selection[0].classList.remove('hidden');
+
+//     todayChart.classList.remove("hidden");
+
+// 	populationChart.classList.remove("hidden");
+
+// 	caseSummaryChart.classList.remove("hidden");
+
+
+
+// 	//hide all loading animation
+// 	for (let element = 0; element < loading.length; element++) {
+
+// 		loading[element].classList.remove('is-loading');
+
+// 		loading[element].classList.add('hidden');
+
+// 	};
+
+// 	for (let element = 0; element < subDataContainer.length; element++) {
+
+// 		subDataContainer[element].classList.remove('hidden');
+
+// 	};
+
+// 	generateOption(newData);
+
+// 	distributeData();
+
+//   }else{
+
+//     // console.log("HTTP-Error: " + response.status);
+
+//   }
+
+//   // return responseArray;
+
+// }
+
+// getData();
 
 const distributeData = (() => {
 
@@ -350,11 +456,13 @@ const distributeData = (() => {
 
 const generateOption = ((data) => {
 
+    let parsedData = JSON.parse(data);
+
 	const select = document.getElementById('selection');
 
-	for (let i = 0; i < data.length; i++) {
+	for (let i = 0; i < parsedData.length; i++) {
 
-		const country = data[i].country;
+		const country = parsedData[i].country;
 
 		const option = document.createElement('option');
 
@@ -1069,6 +1177,10 @@ document.getElementById("darkmode-btn").addEventListener("click", function(){
 
     txtLink[0].classList.remove('txt-link-drk');
 
+    txtLink[1].classList.add('txt-link-drk');
+
+    txtLink[1].classList.remove('txt-link-lht');
+
     controlLbl[0].classList.add('control-lbl-lht');
 
     controlLbl[0].classList.remove('control-lbl-drk');
@@ -1164,6 +1276,10 @@ document.getElementById("darkmode-btn").addEventListener("click", function(){
     txtLink[0].classList.add('txt-link-drk');
 
     txtLink[0].classList.remove('txt-link-lht');
+
+    txtLink[1].classList.add('txt-link-drk');
+
+    txtLink[1].classList.remove('txt-link-lht');
 
     controlLbl[0].classList.add('control-lbl-drk');
 

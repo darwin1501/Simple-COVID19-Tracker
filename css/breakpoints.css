@@ -99,6 +99,11 @@
 	}
 	.header-txt-container{
 		margin-top: -3%;
+		margin-left: -60px;
+	}
+	.sub-txt-left{
+	margin-left: 65px;
+	text-align: left !important;
 	}
 }
 @media screen and (min-width: 1000px){
