@@ -1,4 +1,4 @@
- 
+
 //global charts
 
  var doughnutOne = document.getElementById('case-today-chart');
@@ -256,107 +256,147 @@ for (let element = 0; element < subDataContainer.length; element++) {
 
 	};
 
-//process all API request
+  const getData = (()=>{
+
+    const newDataParsed = JSON.parse(sessionStorage.localNewCase);
+
+    const oldDataParsed = JSON.parse(sessionStorage.localOldCase);
+
+    const globalNewDataParsed = JSON.parse(sessionStorage.globalNewCase);
+
+    const globalOldDataParsed = JSON.parse(sessionStorage.globalOldCase);
+
+    // console.log(JSON.parse(sessionStorage.localNewCase));
+    // console.log(JSON.parse(sessionStorage.localOldCase));
+    // console.log(JSON.parse(sessionStorage.globalNewCase));
+    // console.log(JSON.parse(sessionStorage.globalOldCase));
+
+    getDetailedCase(newDataParsed, oldDataParsed, globalNewDataParsed, globalOldDataParsed);
+
+})
+
+// async funtion
     async function doCORSRequest(options) {
 
-    //get all elements that needs to hide and show
-    const loading = document.getElementsByClassName('loading');
+    var localNewCase = await options.url;
+    var localOldCase = await options.url2;
+    var globalOldCase = await options.url3;
+    var globalNewCase = await options.url4;
 
-    const selection = document.getElementsByClassName('selection-container');
+        var CORS = await cors_api_url;
 
-    const todayChart = document.getElementById('case-today-chart');
+    const localNewCaseReq = new XMLHttpRequest();
+    const localOldCaseReq = new XMLHttpRequest();
+    const globalNewCaseReq = new XMLHttpRequest();
+    const globalOldCaseReq = new XMLHttpRequest();
 
-    const populationChart = document.getElementById('population-chart');
 
-    const caseSummaryChart = document.getElementById('case-summary');
+    //start loading animation here
 
-    const subDataContainer = document.getElementsByClassName('sub-data-container');    
+    localNewCaseReq.open(options.method, CORS + localNewCase);
 
-    //get all url
-    const newCountryCase = await options.url;
+    localNewCaseReq.onload = localNewCaseReq.onerror  = function() {
 
-    const oldCountryCase = await options.url2;
+      sessionStorage.localNewCase = localNewCaseReq.responseText
 
-    const newGlobalCase = await options.url3;
+      generateOption(localNewCaseReq.responseText)
 
-    const oldGlobalCase = await options.url4;
+      // -2nd Start---------------------------------------------------------
+          localOldCaseReq.open(options.method, CORS + localOldCase);
 
-    //get CORS api
-    const CORS = await cors_api_url;
+          localOldCaseReq.onload = localOldCaseReq.onerror  = function() {
 
-    //set new request
-    let newCountryReq = new XMLHttpRequest();
+          sessionStorage.localOldCase = localOldCaseReq.responseText;
 
-    let oldCountryReq = new XMLHttpRequest();
+              // -3rd Start---------------------------------------------------------
+              globalNewCaseReq.open(options.method, CORS + globalNewCase);
 
-    let newGlobalReq = new XMLHttpRequest();
+              globalNewCaseReq.onload = globalNewCaseReq.onerror  = function() {
 
-    let oldGlobalReq = new XMLHttpRequest();
+              sessionStorage.globalNewCase = globalNewCaseReq.responseText;
 
-    //process URL with CORS
-    newCountryReq.open(options.method, CORS + newCountryCase);
-    newCountryReq.onload = newCountryReq.onerror = function() {
-    //set to session
-    sessionStorage.newData = newCountryReq.responseText;
-    };
-    newCountryReq.send(options.data);
-    //process URL with CORS
-    oldCountryReq.open(options.method, CORS + oldCountryCase);
-    oldCountryReq.onload = oldCountryReq.onerror = function() {
-    //se to session
-    sessionStorage.oldData = oldCountryReq.responseText;
-    };
-    oldCountryReq.send(options.data);
-    //process URL with CORS
-    newGlobalReq.open(options.method, CORS + newGlobalCase);
-    newGlobalReq.onload = newGlobalReq.onerror = function() {
-    //se to session
-    sessionStorage.globalNewData = newGlobalReq.responseText;
-    };
-    newGlobalReq.send(options.data);
-    //process URL with CORS
-    oldGlobalReq.open(options.method, CORS + oldGlobalCase);
-    oldGlobalReq.onload = oldGlobalReq.onerror = function() {
-    //se to session
-    sessionStorage.globalOldData = oldGlobalReq.responseText;
+                  // -4th Start---------------------------------------------------------
+                  globalOldCaseReq.open(options.method, CORS + globalOldCase);
 
-    // show elements
-    selection[0].classList.remove('hidden');
+                  globalOldCaseReq.onload = globalOldCaseReq.onerror  = function() {
 
-    todayChart.classList.remove("hidden");
+                  //stop loading animation here
 
-    populationChart.classList.remove("hidden");
+                  //get all elements
 
-    caseSummaryChart.classList.remove("hidden");
+                    const loading = document.getElementsByClassName('loading');
 
-        //hide all loading animation
-        for (let element = 0; element < loading.length; element++) {
+                     const selection = document.getElementsByClassName('selection-container');
 
-            loading[element].classList.remove('is-loading');
+                     const todayChart = document.getElementById('case-today-chart');
 
-            loading[element].classList.add('hidden');
+                     const populationChart = document.getElementById('population-chart');
+
+                     const caseSummaryChart = document.getElementById('case-summary');
+
+                     const subDataContainer = document.getElementsByClassName('sub-data-container');
+
+                    selection[0].classList.remove('hidden');
+
+                    todayChart.classList.remove("hidden");
+
+                    populationChart.classList.remove("hidden");
+
+                    caseSummaryChart.classList.remove("hidden");
+
+
+                    //hide all loading animation
+                    for (let element = 0; element < loading.length; element++) {
+
+                        loading[element].classList.remove('is-loading');
+
+                        loading[element].classList.add('hidden');
+
+                    };
+
+                    for (let element = 0; element < subDataContainer.length; element++) {
+
+                        subDataContainer[element].classList.remove('hidden');
+
+                    };
+
+                  sessionStorage.globalOldCase = globalOldCaseReq.responseText;
+
+                 //run function
+                  getData();
+
+                };
+
+                  globalOldCaseReq.send();
+                  // -4th End---------------------------------------------------------
+
+                  // getData();
+            };
+
+              globalNewCaseReq.send();
+          // -3rd End---------------------------------------------------------
         };
 
-        for (let element = 0; element < subDataContainer.length; element++) {
-
-            subDataContainer[element].classList.remove('hidden');
-        };
-
-    generateOption(sessionStorage.newData);
-
-    distributeData();
+        localOldCaseReq.send();
+      // -2nd End---------------------------------------------------------
     };
 
-    oldGlobalReq.send(options.data);
+    localNewCaseReq.send();    
   }
+    
 
-    doCORSRequest({
+doCORSRequest({
         method: 'GET',
         url: covid19Data1,
         url2: covid19Data2,
         url3: covid19GlobalData1,
         url4: covid19GlobalData2,
       });
+
+
+
+
+
 
 // async function getData(){
 
@@ -441,18 +481,7 @@ for (let element = 0; element < subDataContainer.length; element++) {
 
 // getData();
 
-const distributeData = (() => {
 
-	const newDataParsed = JSON.parse( sessionStorage.newData );
-
-	const oldDataParsed = JSON.parse( sessionStorage.oldData );
-
-	const globalNewDataParsed = JSON.parse( sessionStorage.globalNewData );
-
-	const globalOldDataParsed = JSON.parse( sessionStorage.globalOldData );
-
-	getDetailedCase(newDataParsed, oldDataParsed, globalNewDataParsed, globalOldDataParsed);
-})
 
 const generateOption = ((data) => {
 
