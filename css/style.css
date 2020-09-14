@@ -378,7 +378,7 @@ label{
   transition: 0.5s;
   transition-delay: 0.5s;
 }
-.chart-lbl-drk, .control-lbl-drk, .data-txt-drk, .footer-txt-drk, .header-txt-drk, .sub-txt-drk, .subdata-lbl-drk, .txt-link-drk{
+.control-lbl-drk, .footer-txt-drk, .sub-txt-drk, .subdata-lbl-drk{
   color: var(--black-l1) !important;
   transition: 0.5s;
   transition-delay: 0.5s;
@@ -403,8 +403,11 @@ label{
   background-color: var(--white) !important;
   box-shadow: none;
 }
+.chart-lbl-drk, .data-txt-drk, .header-txt-drk, .txt-link-drk{
+  color: var(--white) !important;
+}
 .label-drk{
-  color: var(--black) !important;
+  color: var(--black-l1) !important;
   transition: 0.5s;
   transition-delay: 0.5s;
 }

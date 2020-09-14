@@ -140,6 +140,10 @@ if(localStorage.getItem('darkmode') === 'on'){
 
     subTxt[0].classList.remove('sub-txt-lht');
 
+    subTxt[1].classList.add('sub-txt-drk');
+
+    subTxt[1].classList.remove('sub-txt-lht');
+
     txtLink[0].classList.add('txt-link-drk');
 
     txtLink[0].classList.remove('txt-link-lht');
@@ -1202,13 +1206,17 @@ document.getElementById("darkmode-btn").addEventListener("click", function(){
 
     subTxt[0].classList.remove('sub-txt-drk');
 
+    subTxt[1].classList.add('sub-txt-lht');
+
+    subTxt[1].classList.remove('sub-txt-drk');
+
     txtLink[0].classList.add('txt-link-lht');
 
     txtLink[0].classList.remove('txt-link-drk');
 
-    txtLink[1].classList.add('txt-link-drk');
+    txtLink[1].classList.add('txt-link-lht');
 
-    txtLink[1].classList.remove('txt-link-lht');
+    txtLink[1].classList.remove('txt-link-drk');
 
     controlLbl[0].classList.add('control-lbl-lht');
 
@@ -1301,6 +1309,10 @@ document.getElementById("darkmode-btn").addEventListener("click", function(){
     subTxt[0].classList.add('sub-txt-drk');
 
     subTxt[0].classList.remove('sub-txt-lht');
+
+    subTxt[1].classList.add('sub-txt-drk');
+
+    subTxt[1].classList.remove('sub-txt-lht');
 
     txtLink[0].classList.add('txt-link-drk');
 
