@@ -1061,6 +1061,8 @@ const getPopulationsAndInfected = ((data) =>{
 //get total active case, recovery, and deaths
 const getOverallDetailedCase = ((data, country) =>{
 
+        const getTotalCase = data.cases
+
 		const getActiveCase = data.active;
 
 		const getRecovered = data.recovered;
@@ -1075,7 +1077,7 @@ const getOverallDetailedCase = ((data, country) =>{
 
 		const deathsFormated = new Intl.NumberFormat().format(getDeaths);
 
-		const casesFormated = new Intl.NumberFormat().format(data.cases);
+		const casesFormated = new Intl.NumberFormat().format(getTotalCase);
 
 		const totalCaseLbl = document.getElementById('total-case');
 
@@ -1085,9 +1087,34 @@ const getOverallDetailedCase = ((data, country) =>{
 
 		const deathsLbl = document.getElementById('total-deaths-data');
 
+        const activeLblPc = document.getElementById('active-pc');
+
+        const recoveryLblPc = document.getElementById('recovery-pc');
+
+        const deathsLblPc = document.getElementById('deaths-pc');
+
 		// console.log(`${country} || Active: ${getActiveCase} | Recovered: ${getRecovered} | Deaths ${getDeaths}`);
 
-		totalCaseLbl.innerHTML = `${casesFormated}`;
+        //get percentage
+        const divActive =  getActiveCase / getTotalCase;
+
+        const divRecovered =  getRecovered / getTotalCase;
+
+        const divDeaths =  getDeaths / getTotalCase;
+
+        const getActivePc = divActive * 100;
+
+        const getRecoveredPc = divRecovered * 100;
+
+        const getDeathsPc = divDeaths * 100;
+
+        activeLblPc.innerHTML = `(${getActivePc.toFixed(2)}%)`;
+
+        recoveryLblPc.innerHTML = `(${getRecoveredPc.toFixed(2)}%)`;
+
+        deathsLblPc.innerHTML = `(${getDeathsPc.toFixed(2)}%)`;
+
+		totalCaseLbl.innerHTML = casesFormated;
 
 		activeCaseLbl.innerHTML = activeCaseFormated;
 

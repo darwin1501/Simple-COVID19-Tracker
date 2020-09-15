@@ -123,7 +123,8 @@ input:checked + .slider:before {
 	--black: #595959;
 	--black-l1: #999999;
 	--blue: #9B9AFD;
-	--grey-l1: #F3F3F4;
+/*	--grey-l1: #F3F3F4;*/
+  --grey-l1: #F9FAFB;
   --grey-d0: #959595;
 	--grey-d1: #E3E3E3;
 	--grey-d2: #D7D7D7;
@@ -298,6 +299,7 @@ label{
 .txt-link{
 	color: var(--black);
 	cursor: pointer;
+  font-weight: bold;
 }
 .toogle-btn-container{
     display: flex;
@@ -405,6 +407,8 @@ label{
 }
 .chart-lbl-drk, .data-txt-drk, .header-txt-drk, .txt-link-drk{
   color: var(--white) !important;
+  transition: 0.5s;
+  transition-delay: 0.5s;
 }
 .label-drk{
   color: var(--black-l1) !important;
