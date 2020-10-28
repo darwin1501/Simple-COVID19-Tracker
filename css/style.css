@@ -189,6 +189,9 @@ footer{
 	display: flex;
     padding: 20px;
 }
+.footer-link{
+  text-decoration: none !important;
+}
 .chart-lbl {
 	margin-bottom: 0;
     font-size: 14px;
